@@ -1,4 +1,8 @@
+#[cfg(config)]
+use serde::de::DeserializeOwned;
 use serde::{Deserialize, Serialize};
+#[cfg(config)]
+use std::collections::HashMap;
 use std::{collections::BTreeMap, fmt::Debug};
 use zeroize::Zeroize;
 
@@ -75,6 +79,28 @@ impl IntoIterator for SecretStore {
             .map(|(k, s)| (k, s.expose().to_owned()))
             .collect::<BTreeMap<_, _>>()
             .into_iter()
+    }
+}
+
+#[cfg(config)]
+impl SecretStore {
+    pub fn deserialize(self) -> T
+    where
+        T: DeserializeOwned,
+    {
+        let secrets = self.into_iter().collect::<HashMap<_, _>>();
+
+        config::Config::builder()
+            .add_source(
+                config::Environment::default()
+                    .source(Some(secrets))
+                    .try_parsing(true)
+                    .separator("__"),
+            )
+            .build()
+            .expect("Failed to load app configuration")
+            .try_deserialize()
+            .expect("Cannot deserialize configuration")
     }
 }
 

@@ -50,6 +50,7 @@ url = { workspace = true, features = ["serde"] }
 uuid = { workspace = true, features = ["v4", "serde"], optional = true }
 zeroize = { workspace = true }
 wiremock = { workspace = true, optional = true }
+config = { version = "0.14.0", optional = true }
 
 [features]
 backend = [
@@ -101,6 +102,7 @@ sqlx = ["dep:sqlx", "sqlx/sqlite"]
 service = ["chrono/serde", "display", "tracing", "tracing-subscriber", "uuid"]
 test-utils = ["wiremock"]
 tracing = ["dep:tracing"]
+config = ["dep:config"]
 
 [dev-dependencies]
 axum = { workspace = true }

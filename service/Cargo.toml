@@ -44,3 +44,4 @@ builder = [
     "tracing",
 ]
 runner = ["shuttle-proto/runtime-client", "tokio/process", "dunce"]
+config = ["shuttle-common/config"]
