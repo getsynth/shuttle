@@ -624,6 +624,7 @@ workflows:
                 - resources/opendal
                 - services/shuttle-actix-web
                 - services/shuttle-axum
+                - services/shuttle-ntex
                 - services/shuttle-poem
                 - services/shuttle-rocket
                 - services/shuttle-salvo
@@ -899,6 +900,7 @@ workflows:
               path:
                 - services/shuttle-actix-web
                 - services/shuttle-axum
+                - services/shuttle-ntex
                 - services/shuttle-poem
                 - services/shuttle-rocket
                 - services/shuttle-salvo

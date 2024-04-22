@@ -12,8 +12,9 @@ shuttle-qdrant = { path = "BASE/resources/qdrant" }
 shuttle-shared-db = { path = "BASE/resources/shared-db" }
 shuttle-turso = { path = "BASE/resources/turso" }
 
-shuttle-axum = { path = "BASE/services/shuttle-axum" }
 shuttle-actix-web = { path = "BASE/services/shuttle-actix-web" }
+shuttle-axum = { path = "BASE/services/shuttle-axum" }
+shuttle-ntex = { path = "BASE/services/shuttle-ntex" }
 shuttle-poem = { path = "BASE/services/shuttle-poem" }
 shuttle-rocket = { path = "BASE/services/shuttle-rocket" }
 shuttle-salvo = { path = "BASE/services/shuttle-salvo" }
