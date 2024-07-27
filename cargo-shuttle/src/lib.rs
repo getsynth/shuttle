@@ -1273,6 +1273,13 @@ impl Shuttle {
         service: &BuiltService,
         idx: u16,
     ) -> Result<Option<(Child, runtime::Client)>> {
+        macro_rules! println {
+            ($($rest:tt)*) => {
+                if !std::env::args().any(|arg| arg == "--quiet") {
+                    std::println!($($rest)*);
+                }
+            }
+        }
         let secrets_file = run_args.secret_args.secrets.clone().or_else(|| {
             let crate_dir = service.crate_directory();
             // Prioritise crate-local prod secrets over workspace dev secrets (in the rare case that both exist)

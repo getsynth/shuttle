@@ -31,6 +31,7 @@ pub async fn cargo_shuttle_run(working_directory: &str, external: bool) -> Strin
         external,
         release: false,
         raw: false,
+        quiet: false,
         secret_args: Default::default(),
     };
 

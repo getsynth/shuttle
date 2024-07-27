@@ -301,6 +301,9 @@ pub struct RunArgs {
 
     #[command(flatten)]
     pub secret_args: SecretsArgs,
+
+    #[arg(long)]
+    pub quiet: bool,
 }
 
 #[derive(Parser, Debug, Default)]
