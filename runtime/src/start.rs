@@ -3,7 +3,7 @@ use tracing::warn;
 
 use crate::{
     __internals::{Loader, Runner},
-    alpha, beta, version,
+    alpha, rt,
 };
 
 #[derive(Default)]
@@ -52,11 +52,11 @@ impl Args {
 pub async fn start(loader: impl Loader + Send + 'static, runner: impl Runner + Send + 'static) {
     // `--version` overrides any other arguments. Used by cargo-shuttle to check compatibility on local runs.
     if std::env::args().any(|arg| arg == "--version") {
-        println!("{}", version());
+        println!("{}", crate::VERSION_STRING);
         return;
     }
 
-    println!("{} {} starting", crate::NAME, crate::VERSION);
+    println!("{} starting", crate::VERSION_STRING);
 
     let args = match Args::parse() {
         Ok(args) => args,
@@ -92,7 +92,7 @@ pub async fn start(loader: impl Loader + Send + 'static, runner: impl Runner + S
     }
 
     if args.beta {
-        beta::start(loader, runner).await
+        rt::start(loader, runner).await
     } else {
         alpha::start(args.port.unwrap(), loader, runner).await
     }

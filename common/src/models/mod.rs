@@ -1,4 +1,5 @@
 pub mod admin;
+pub mod auth;
 pub mod deployment;
 pub mod error;
 pub mod project;

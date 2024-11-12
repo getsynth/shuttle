@@ -1,6 +1,6 @@
 [package]
 name = "shuttle-axum"
-version = "0.48.0"
+version = "0.49.0"
 edition = "2021"
 license = "Apache-2.0"
 description = "Service implementation to run an axum webserver on shuttle"
@@ -12,7 +12,7 @@ keywords = ["shuttle-service", "axum"]
 [dependencies]
 axum = { version = "0.7.3", optional = true }
 axum-0-6 = { package = "axum", version = "0.6.13", optional = true }
-shuttle-runtime = { path = "../../runtime", version = "0.48.0", default-features = false }
+shuttle-runtime = { path = "../../runtime", version = "0.49.0", default-features = false }
 
 [features]
 default = ["axum"]

@@ -2,14 +2,14 @@ use std::{fs, io, path::PathBuf};
 
 use clap::{Error, Parser, Subcommand};
 use shuttle_common::{
-    constants::API_URL_PRODUCTION,
+    constants::API_URL_RS,
     models::{project::ComputeTier, user::UserId},
 };
 
 #[derive(Parser, Debug)]
 pub struct Args {
     /// run this command against the api at the supplied url
-    #[arg(long, default_value = API_URL_PRODUCTION, env = "SHUTTLE_API")]
+    #[arg(long, default_value = API_URL_RS, env = "SHUTTLE_API")]
     pub api_url: String,
 
     #[command(subcommand)]

@@ -19,7 +19,7 @@ impl ToJson for reqwest::Response {
             .unwrap_or_else(|_| format!("[{} bytes]", bytes.len()));
 
         #[cfg(feature = "tracing")]
-        tracing::trace!(response = %string, "Parsing response to JSON");
+        tracing::trace!(response = %string, "Parsing response as JSON");
 
         if matches!(
             status_code,
@@ -28,7 +28,7 @@ impl ToJson for reqwest::Response {
             serde_json::from_str(&string).context("failed to parse a successful response")
         } else {
             #[cfg(feature = "tracing")]
-            tracing::trace!("Parsing response to common error");
+            tracing::trace!("Parsing response as API error");
 
             let res: ApiError = match serde_json::from_str(&string) {
                 Ok(res) => res,

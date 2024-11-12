@@ -7,7 +7,72 @@ See [conventional commits](https://www.conventionalcommits.org/) for commit guid
 
 **For proper release notes with more details such as upgrading guidelines, check out the [releases page](https://github.com/shuttle-hq/shuttle/releases).**
 
-## [0.48.0](https://github.com/shuttle-hq/shuttle/compare/v0.47.0..0.48.0) - 2024-10-01
+## [0.49.0](https://github.com/shuttle-hq/shuttle/compare/v0.48.3..0.49.0) - 2024-11-12
+
+### Features
+
+- *(cargo-shuttle)* Redeploy command ([#1916](https://github.com/shuttle-hq/shuttle/issues/1916)) - ([62bf6e8](https://github.com/shuttle-hq/shuttle/commit/62bf6e801210a144afad1a51553d05b9e01e07f0))
+- *(cargo-shuttle)* Automatic login via console, login --prompt ([#1913](https://github.com/shuttle-hq/shuttle/issues/1913)) - ([792e681](https://github.com/shuttle-hq/shuttle/commit/792e6818ab33c5bef80327ec265aaa84cf2f16b9))
+- *(cargo-shuttle)* Update project name command ([#1912](https://github.com/shuttle-hq/shuttle/issues/1912)) - ([40ff642](https://github.com/shuttle-hq/shuttle/commit/40ff642e46b5968e66f91894e3199453bd1d86a8))
+- *(common)* Project update models ([#1910](https://github.com/shuttle-hq/shuttle/issues/1910)) - ([2ba0046](https://github.com/shuttle-hq/shuttle/commit/2ba004613c3080acc9de8fd0d2f0e5e43aae5aa9))
+- Dump db endpoint, fixes, Rust 1.82 ([#1907](https://github.com/shuttle-hq/shuttle/issues/1907)) - ([b3ac098](https://github.com/shuttle-hq/shuttle/commit/b3ac098a47c53beba805695cd1f73e73379b3e4b))
+- Compute tier upgrade admin command ([#1906](https://github.com/shuttle-hq/shuttle/issues/1906)) - ([e821c8f](https://github.com/shuttle-hq/shuttle/commit/e821c8f036976de34aa07783798af3d48c8577a0))
+
+### Bug Fixes
+
+- *(api-client)* Update archive endpoint ([#1914](https://github.com/shuttle-hq/shuttle/issues/1914)) - ([c8e6d15](https://github.com/shuttle-hq/shuttle/commit/c8e6d15243dff7c0ae6afbb0f931ba6f9f7928f9))
+- *(cargo-shuttle)* Shell completion, refactors ([#1909](https://github.com/shuttle-hq/shuttle/issues/1909)) - ([b91de7a](https://github.com/shuttle-hq/shuttle/commit/b91de7afa79174041e23437dc62f3eb1cdf4a113))
+- Hide redeploy command - ([9c7c887](https://github.com/shuttle-hq/shuttle/commit/9c7c887196c02e5012600fe1b5328c4ac2ecb552))
+- Don't attempt project linking on local run, create project and link on beta init ([#1911](https://github.com/shuttle-hq/shuttle/issues/1911)) - ([bfc05ec](https://github.com/shuttle-hq/shuttle/commit/bfc05ec8cd687334441a8f7767c497cb3fe24239))
+
+### Miscellaneous Tasks
+
+- V0.49.0 - ([09335f6](https://github.com/shuttle-hq/shuttle/commit/09335f689a64dffc80cac5e73bd27fd26d12f55f))
+
+### Miscellaneous
+
+- Examples - ([5cad831](https://github.com/shuttle-hq/shuttle/commit/5cad831f3b5ab86eeca48b2fc3beb29947bea0c2))
+
+## [0.48.3](https://github.com/shuttle-hq/shuttle/compare/v0.48.2..v0.48.3) - 2024-10-10
+
+### Bug Fixes
+
+- *(cargo-shuttle)* Don't print platform info in unrelated commands ([#1902](https://github.com/shuttle-hq/shuttle/issues/1902)) - ([e58d589](https://github.com/shuttle-hq/shuttle/commit/e58d5890af586d8d875894e01f847a8d5f1e1734))
+- Shuttle-common 0.48.2 ([#1901](https://github.com/shuttle-hq/shuttle/issues/1901)) - ([0acc7e6](https://github.com/shuttle-hq/shuttle/commit/0acc7e6f3397f78e707f8caf59c0c2709f760aef))
+
+### Miscellaneous Tasks
+
+- Cargo update ([#1904](https://github.com/shuttle-hq/shuttle/issues/1904)) - ([80c8763](https://github.com/shuttle-hq/shuttle/commit/80c8763dbce2760d0cb5eb6116f82b662e6ca98d))
+
+### Miscellaneous
+
+- Allow deprecated chrono method in deprecated backends ([#1905](https://github.com/shuttle-hq/shuttle/issues/1905)) - ([0b3f714](https://github.com/shuttle-hq/shuttle/commit/0b3f714e65dd238ecfea9c4e6815505777106159))
+
+## [0.48.2](https://github.com/shuttle-hq/shuttle/compare/v0.48.1..v0.48.2) - 2024-10-10
+
+### Features
+
+- *(cargo-shuttle)* V0.48.2, colored platform outputs, fixes ([#1886](https://github.com/shuttle-hq/shuttle/issues/1886)) - ([be7b731](https://github.com/shuttle-hq/shuttle/commit/be7b73106bbe90cce78ee8e3504fd36983089a2f))
+
+## [0.48.1](https://github.com/shuttle-hq/shuttle/compare/v0.48.0..v0.48.1) - 2024-10-03
+
+### Features
+
+- *(cargo-shuttle)* Shuttle.toml new key names ([#1895](https://github.com/shuttle-hq/shuttle/issues/1895)) - ([4820498](https://github.com/shuttle-hq/shuttle/commit/48204982cb153c131dfc168bec3d9980ae752af8))
+- *(cargo-shuttle)* Beta deploy.deny_dirty config, allow dirty deploys by default ([#1894](https://github.com/shuttle-hq/shuttle/issues/1894)) - ([1e90f20](https://github.com/shuttle-hq/shuttle/commit/1e90f20358e1004b0aea53bdfabfa33c56893543))
+- *(installer)* Install shuttle binary ([#1890](https://github.com/shuttle-hq/shuttle/issues/1890)) - ([468ca85](https://github.com/shuttle-hq/shuttle/commit/468ca85668736832db6e355cb8aa772276c77504))
+
+### Bug Fixes
+
+- *(cargo-shuttle)* Beta: create missing project on deploy, fix local run, better project link dialogue ([#1893](https://github.com/shuttle-hq/shuttle/issues/1893)) - ([8efada9](https://github.com/shuttle-hq/shuttle/commit/8efada9a62f95dad41721eabdc88cb80eaa91800))
+- Reduce gateway cert renew sleep ([#1888](https://github.com/shuttle-hq/shuttle/issues/1888)) - ([0ccb348](https://github.com/shuttle-hq/shuttle/commit/0ccb3488c4e91dfc98a3a8d3d32eb5df082bed48))
+- Otel exporter config ([#1891](https://github.com/shuttle-hq/shuttle/issues/1891)) - ([6386223](https://github.com/shuttle-hq/shuttle/commit/63862238113b5522c9969fc705a4db1d45506776))
+
+### Miscellaneous Tasks
+
+- Bump cargo-shuttle ([#1897](https://github.com/shuttle-hq/shuttle/issues/1897)) - ([d01466e](https://github.com/shuttle-hq/shuttle/commit/d01466e443eb407ecc219e906089004e1e789bbd))
+
+## [0.48.0](https://github.com/shuttle-hq/shuttle/compare/v0.47.0..v0.48.0) - 2024-10-01
 
 ### Features
 
@@ -46,7 +111,7 @@ See [conventional commits](https://www.conventionalcommits.org/) for commit guid
 
 ### Miscellaneous Tasks
 
-- V0.48.0 - ([cbac5bc](https://github.com/shuttle-hq/shuttle/commit/cbac5bce79852172f9eb495c5834900deda61bed))
+- V0.48.0 ([#1887](https://github.com/shuttle-hq/shuttle/issues/1887)) - ([af27275](https://github.com/shuttle-hq/shuttle/commit/af27275ccc881cf814acff757538ea7554afd8ae))
 - Deployer rust 1.81 ([#1883](https://github.com/shuttle-hq/shuttle/issues/1883)) - ([1d2ea62](https://github.com/shuttle-hq/shuttle/commit/1d2ea621b763fc1f039f8513d44901c0d75246d2))
 - Sqlx 0.8.2, MSRV 1.78 ([#1867](https://github.com/shuttle-hq/shuttle/issues/1867)) - ([a74f4ee](https://github.com/shuttle-hq/shuttle/commit/a74f4ee049f156848f1106d81bc8ef8b8858f7dd))
 - Disable honeycomb export, remove vars ([#1868](https://github.com/shuttle-hq/shuttle/issues/1868)) - ([873b172](https://github.com/shuttle-hq/shuttle/commit/873b1720eda277f2b092e757a5826097d4afc7ee))
@@ -55,7 +120,6 @@ See [conventional commits](https://www.conventionalcommits.org/) for commit guid
 
 ### Miscellaneous
 
-- Bump examples - ([7f2f95b](https://github.com/shuttle-hq/shuttle/commit/7f2f95bc9663bb91ced38f7d6442ccf0a2895af5))
 - Bump sqlx to 0.8 in libraries ([#1847](https://github.com/shuttle-hq/shuttle/issues/1847)) - ([91c189a](https://github.com/shuttle-hq/shuttle/commit/91c189a1aa5cd9451eb2146ed8f85b222c4a8423))
 
 ## [0.47.0](https://github.com/shuttle-hq/shuttle/compare/v0.46.0..v0.47.0) - 2024-07-22

@@ -24,10 +24,7 @@ use tokio::sync::{
 use tokio_stream::wrappers::ReceiverStream;
 use tonic::{transport::Server, Request, Response, Status};
 
-use crate::{
-    __internals::{Loader, Runner},
-    version,
-};
+use crate::__internals::{Loader, Runner};
 
 pub async fn start(
     port: u16,
@@ -328,7 +325,9 @@ where
     }
 
     async fn version(&self, _requset: Request<Ping>) -> Result<Response<VersionInfo>, Status> {
-        Ok(Response::new(VersionInfo { version: version() }))
+        Ok(Response::new(VersionInfo {
+            version: crate::VERSION_STRING.to_owned(),
+        }))
     }
 
     async fn health_check(&self, _request: Request<Ping>) -> Result<Response<Pong>, Status> {

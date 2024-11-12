@@ -130,7 +130,7 @@ command = "git-cliff"
 args = ["-o", "CHANGELOG.md", "-t", "${@}"]
 
 [tasks.types]
-install_crate = { crate_name = "typeshare-cli", binary = "typeshare", test_arg = ["-V"], min_version = "1.11.0" }
+install_crate = { crate_name = "typeshare-cli", binary = "typeshare", test_arg = ["-V"], version = "1.11.0" }
 command = "typeshare"
 args = ["common", "-l", "typescript", "-c", "common/typeshare.toml", "-o", "common/types.ts"]
 

@@ -134,12 +134,20 @@ export interface ProjectCreateRequestBeta {
 	name: string;
 }
 
+export enum ComputeTier {
+	XS = "xs",
+	S = "s",
+	M = "m",
+	L = "l",
+}
+
 export interface ProjectResponseBeta {
 	id: string;
 	/** Project owner */
 	user_id: string;
 	name: string;
 	created_at: string;
+	compute_tier?: ComputeTier;
 	/** State of the current deployment if one exists (something has been deployed). */
 	deployment_state?: DeploymentStateBeta;
 	/** URIs where running deployments can be reached */
@@ -148,6 +156,12 @@ export interface ProjectResponseBeta {
 
 export interface ProjectListResponseBeta {
 	projects: ProjectResponseBeta[];
+}
+
+/** Set wanted field(s) to Some to update those parts of the project */
+export interface ProjectUpdateRequestBeta {
+	name?: string;
+	compute_tier?: ComputeTier;
 }
 
 export enum ResourceTypeBeta {

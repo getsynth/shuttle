@@ -212,6 +212,8 @@ async fn compile(
     }
     let target_path = target_path.into();
 
+    // TODO?: Use https://crates.io/crates/escargot instead
+
     let mut cmd = tokio::process::Command::new("cargo");
     cmd.arg("build")
         .arg("--manifest-path")
