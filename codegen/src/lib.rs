@@ -49,7 +49,7 @@ mod shuttle_main;
 /// ```
 ///
 /// More [shuttle managed resources can be found here](https://github.com/shuttle-hq/shuttle/tree/main/resources)
-#[proc_macro_error::proc_macro_error]
+#[proc_macro_error2::proc_macro_error]
 #[proc_macro_attribute]
 pub fn main(
     attr: proc_macro::TokenStream,

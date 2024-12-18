@@ -33,7 +33,7 @@ commands:
       - run:
           name: Install sccache
           command: |
-            SCCACHE_VERSION='v0.7.7'
+            SCCACHE_VERSION='v0.8.2'
             ls ~/.cargo/bin/sccache \
               || curl -L https://github.com/mozilla/sccache/releases/download/$SCCACHE_VERSION/sccache-$SCCACHE_VERSION-x86_64-unknown-linux-musl.tar.gz \
                 | tar -xOz sccache-$SCCACHE_VERSION-x86_64-unknown-linux-musl/sccache \
@@ -125,7 +125,7 @@ commands:
       - run:
           name: Install cargo-make
           environment:
-            VERSION: "0.37.8"
+            VERSION: "0.37.23"
           command: |
             curl -OL https://github.com/sagiegurari/cargo-make/releases/download/$VERSION/cargo-make-v$VERSION-x86_64-unknown-linux-musl.zip && \
               unzip cargo-make-v$VERSION-x86_64-unknown-linux-musl.zip && \
@@ -136,7 +136,7 @@ commands:
       - run:
           name: Install cargo-audit
           environment:
-            VERSION: "v0.20.0"
+            VERSION: "v0.21.0"
           command: |
             curl -L https://github.com/rustsec/rustsec/releases/download/cargo-audit/$VERSION/cargo-audit-x86_64-unknown-linux-musl-$VERSION.tgz \
               | tar -xOz cargo-audit-x86_64-unknown-linux-musl-$VERSION/cargo-audit \

@@ -20,7 +20,7 @@ body:
     attributes:
       label: Version
       description: What version of `cargo-shuttle` are you running (`shuttle --version`)?
-      placeholder: "v0.48.0"
+      placeholder: "v0.49.0"
     validations:
       required: true
   - type: dropdown

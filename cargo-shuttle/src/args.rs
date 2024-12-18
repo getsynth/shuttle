@@ -9,15 +9,16 @@ use anyhow::{bail, Context};
 use cargo_metadata::MetadataCommand;
 use clap::{
     builder::{OsStringValueParser, PossibleValue, TypedValueParser},
-    Parser, ValueEnum,
+    Args, Parser, Subcommand, ValueEnum,
 };
 use clap_complete::Shell;
-use shuttle_common::constants::{DEFAULT_IDLE_MINUTES, EXAMPLES_REPO};
+use shuttle_common::constants::{DEFAULT_IDLE_MINUTES, EXAMPLES_REPO, SHUTTLE_CONSOLE_URL};
 use shuttle_common::resource;
 
 #[derive(Parser)]
 #[command(
     version,
+    next_help_heading = "Global options",
     // Cargo passes in the subcommand name to the invoked executable. Use a
     // hidden, optional positional argument to deal with it.
     arg(clap::Arg::new("dummy")
@@ -26,10 +27,8 @@ use shuttle_common::resource;
         .hide(true))
 )]
 pub struct ShuttleArgs {
-    #[command(flatten)]
-    pub project_args: ProjectArgs,
     /// URL for the Shuttle API to target (mainly for development)
-    #[arg(global = true, long, env = "SHUTTLE_API")]
+    #[arg(global = true, long, env = "SHUTTLE_API", hide = true)]
     pub api_url: Option<String>,
     /// Disable network requests that are not strictly necessary. Limits some features.
     #[arg(global = true, long, env = "SHUTTLE_OFFLINE")]
@@ -40,18 +39,20 @@ pub struct ShuttleArgs {
     /// Target Shuttle's development environment
     #[arg(global = true, long, env = "SHUTTLE_BETA", hide = true)]
     pub beta: bool,
+    #[command(flatten)]
+    pub project_args: ProjectArgs,
 
     #[command(subcommand)]
     pub cmd: Command,
 }
 
 /// Global args for subcommands that deal with projects
-#[derive(Parser, Clone, Debug)]
+#[derive(Args, Clone, Debug)]
 pub struct ProjectArgs {
     /// Specify the working directory
     #[arg(global = true, long, visible_alias = "wd", default_value = ".", value_parser = OsStringValueParser::new().try_map(parse_path))]
     pub working_directory: PathBuf,
-    /// Specify the name or id of the project (overrides crate name)
+    /// Specify the name or id of the project
     #[arg(global = true, long = "name", visible_alias = "id")]
     // in alpha mode, this is always a name
     pub name_or_id: Option<String>,
@@ -93,11 +94,10 @@ impl ProjectArgs {
     }
 }
 
-/// A cargo command for the Shuttle platform (https://www.shuttle.rs/)
+/// CLI for the Shuttle platform (https://www.shuttle.dev/)
 ///
-/// See the CLI docs (https://docs.shuttle.rs/getting-started/shuttle-commands)
-/// for more information.
-#[derive(Parser)]
+/// See the CLI docs for more information: https://docs.shuttle.dev/guides/cli
+#[derive(Subcommand)]
 pub enum Command {
     /// Generate a Shuttle project from a template
     Init(InitArgs),
@@ -145,7 +145,7 @@ pub enum Command {
     },
 }
 
-#[derive(Parser)]
+#[derive(Subcommand)]
 pub enum GenerateCommand {
     /// Generate shell completions
     Shell {
@@ -159,14 +159,15 @@ pub enum GenerateCommand {
     Manpage,
 }
 
-#[derive(Parser)]
+#[derive(Args)]
+#[command(next_help_heading = "Table options")]
 pub struct TableArgs {
     /// Output tables without borders
     #[arg(long, default_value_t = false)]
     pub raw: bool,
 }
 
-#[derive(Parser)]
+#[derive(Subcommand)]
 pub enum DeploymentCommand {
     /// List the deployments for a service
     #[command(visible_alias = "ls")]
@@ -183,25 +184,32 @@ pub enum DeploymentCommand {
         table: TableArgs,
     },
     /// View status of a deployment
+    #[command(visible_alias = "stat")]
     Status {
         /// ID of deployment to get status for
         id: Option<String>,
+    },
+    /// Redeploy a previous deployment (if possible)
+    #[command(visible_alias = "re", hide = true)]
+    Redeploy {
+        /// ID of deployment to redeploy
+        id: String,
     },
     /// Stop running deployment(s)
     Stop,
 }
 
-#[derive(Parser)]
+#[derive(Subcommand)]
 pub enum ResourceCommand {
     /// List the resources for a project
     #[command(visible_alias = "ls")]
     List {
-        #[command(flatten)]
-        table: TableArgs,
-
         /// Show secrets from resources (e.g. a password in a connection string)
         #[arg(long, default_value_t = false)]
         show_secrets: bool,
+
+        #[command(flatten)]
+        table: TableArgs,
     },
     /// Delete a resource
     #[command(visible_alias = "rm")]
@@ -214,7 +222,6 @@ pub enum ResourceCommand {
         confirmation: ConfirmationArgs,
     },
     /// Dump a resource
-    #[command(hide = true)]
     Dump {
         /// Type of the resource to dump.
         /// Use the string in the 'Type' column as displayed in the `resource list` command.
@@ -223,7 +230,7 @@ pub enum ResourceCommand {
     },
 }
 
-#[derive(Parser)]
+#[derive(Subcommand)]
 pub enum CertificateCommand {
     /// Add an SSL certificate for a custom domain
     Add {
@@ -246,12 +253,16 @@ pub enum CertificateCommand {
     },
 }
 
-#[derive(Parser)]
+#[derive(Subcommand)]
 pub enum ProjectCommand {
-    /// Create an environment for this project on Shuttle
+    /// Create a project on Shuttle
     #[command(visible_alias = "create")]
     Start(ProjectStartArgs),
-    /// Check the status of this project's environment on Shuttle
+    /// Update project config
+    #[command(subcommand, visible_alias = "upd")]
+    Update(ProjectUpdateCommand),
+    /// Get the status of this project on Shuttle
+    #[command(visible_alias = "stat")]
     Status {
         /// Follow status of project
         // unused in beta (project has no state to follow)
@@ -281,14 +292,20 @@ pub enum ProjectCommand {
     Link,
 }
 
-#[derive(Parser, Debug)]
+#[derive(Subcommand, Debug)]
+pub enum ProjectUpdateCommand {
+    /// Rename the project, including its default subdomain
+    Name { name: String },
+}
+
+#[derive(Args, Debug)]
 pub struct ConfirmationArgs {
     /// Skip confirmations and proceed
     #[arg(long, short, default_value_t = false)]
     pub yes: bool,
 }
 
-#[derive(Parser, Debug)]
+#[derive(Args, Debug)]
 pub struct ProjectStartArgs {
     #[arg(long, default_value_t = DEFAULT_IDLE_MINUTES)]
     /// How long to wait before putting the project in an idle state due to inactivity.
@@ -296,21 +313,28 @@ pub struct ProjectStartArgs {
     pub idle_minutes: u64,
 }
 
-#[derive(Parser, Clone, Debug, Default)]
+#[derive(Args, Clone, Debug, Default)]
+#[command(next_help_heading = "Login options")]
 pub struct LoginArgs {
-    /// API key for the Shuttle platform
+    /// Prompt to paste the API key instead of opening the browser
+    #[arg(long, conflicts_with = "api_key", alias = "input")]
+    pub prompt: bool,
+    /// Log in with this Shuttle API key
     #[arg(long)]
     pub api_key: Option<String>,
+    /// URL to the Shuttle Console for automatic login
+    #[arg(long, env = "SHUTTLE_CONSOLE", default_value = SHUTTLE_CONSOLE_URL, hide_default_value = true)]
+    pub console_url: String,
 }
 
-#[derive(Parser, Clone, Debug)]
+#[derive(Args, Clone, Debug)]
 pub struct LogoutArgs {
     /// Reset the API key before logging out
     #[arg(long)]
     pub reset_api_key: bool,
 }
 
-#[derive(Parser, Default)]
+#[derive(Args, Default)]
 pub struct DeployArgs {
     /// WIP: Deploy this Docker image instead of building one
     #[arg(long, short = 'i', hide = true)]
@@ -336,7 +360,7 @@ pub struct DeployArgs {
     pub secret_args: SecretsArgs,
 }
 
-#[derive(Parser, Debug)]
+#[derive(Args, Debug)]
 pub struct RunArgs {
     /// Port to start service on
     #[arg(long, short = 'p', env, default_value = "8000")]
@@ -355,14 +379,14 @@ pub struct RunArgs {
     pub secret_args: SecretsArgs,
 }
 
-#[derive(Parser, Debug, Default)]
+#[derive(Args, Debug, Default)]
 pub struct SecretsArgs {
     /// Use this secrets file instead
     #[arg(long, value_parser = OsStringValueParser::new().try_map(parse_path))]
     pub secrets: Option<PathBuf>,
 }
 
-#[derive(Parser, Clone, Debug, Default)]
+#[derive(Args, Clone, Debug, Default)]
 pub struct InitArgs {
     /// Clone a starter template from Shuttle's official examples
     #[arg(long, short, value_enum, conflicts_with_all = &["from", "subfolder"])]
@@ -470,7 +494,7 @@ impl InitTemplateArg {
     }
 }
 
-#[derive(Parser, Clone, Debug, Default)]
+#[derive(Args, Clone, Debug, Default)]
 pub struct LogsArgs {
     /// Deployment ID to get logs for. Defaults to the current deployment
     pub id: Option<String>,

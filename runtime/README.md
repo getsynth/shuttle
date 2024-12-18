@@ -4,9 +4,9 @@
 <img src="https://raw.githubusercontent.com/shuttle-hq/shuttle/main/assets/logo-rectangle-transparent.png" width="400px" style="margin-left: auto; margin-right: auto;"/>
 </div>
 
-[Shuttle](https://www.shuttle.rs/) is a Rust-native cloud development platform that lets you deploy your Rust apps for free.
+[Shuttle](https://www.shuttle.dev/) is a Rust-native cloud development platform that lets you deploy your Rust apps for free.
 
-📖 Check out our documentation to get started quickly: [docs.shuttle.rs](https://docs.shuttle.rs)
+📖 Check out our documentation to get started quickly: [docs.shuttle.dev](https://docs.shuttle.dev)
 
 🙋‍♂️ If you have any questions, join our [Discord](https://discord.gg/shuttle) server.
 
@@ -29,8 +29,8 @@ be a binary crate with a few dependencies including `shuttle-runtime` and `shutt
 
 ```toml
 axum = "0.7.3"
-shuttle-axum = "0.48.0"
-shuttle-runtime = "0.48.0"
+shuttle-axum = "0.49.0"
+shuttle-runtime = "0.49.0"
 tokio = "1.28.2"
 ```
 
@@ -51,7 +51,7 @@ async fn main() -> shuttle_axum::ShuttleAxum {
 }
 ```
 
-Check out [our docs](https://docs.shuttle.rs/introduction/welcome) to see all the frameworks we support, or
+Check out [our docs](https://docs.shuttle.dev) to see all the frameworks we support, or
 our [examples](https://github.com/shuttle-hq/shuttle-examples) if you prefer that format.
 
 ## Running locally

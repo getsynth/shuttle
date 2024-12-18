@@ -299,36 +299,4 @@ mod needs_docker {
 
         assert_eq!(request_text, "{\"id\":1,\"note\":\"Deploy to shuttle\"}");
     }
-
-    #[tokio::test(flavor = "multi_thread")]
-    async fn poem_mongodb() {
-        let url = cargo_shuttle_run("../examples/poem/mongodb", false).await;
-        let client = reqwest::Client::new();
-
-        // Post a todo note and get the persisted todo objectId
-        let post_text = client
-            .post(format!("{url}/todo"))
-            .body("{\"note\": \"Deploy to shuttle\"}")
-            .header("content-type", "application/json")
-            .send()
-            .await
-            .unwrap()
-            .text()
-            .await
-            .unwrap();
-
-        // Valid objectId is 24 char hex string
-        assert_eq!(post_text.len(), 24);
-
-        let request_text = client
-            .get(format!("{url}/todo/{post_text}"))
-            .send()
-            .await
-            .unwrap()
-            .text()
-            .await
-            .unwrap();
-
-        assert_eq!(request_text, "{\"note\":\"Deploy to shuttle\"}");
-    }
 }

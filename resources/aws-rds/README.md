@@ -1,6 +1,6 @@
 # Shuttle AWS RDS
 
-This plugin provisions databases on AWS RDS using [shuttle](https://www.shuttle.rs). The following three engines are supported:
+This plugin provisions databases on AWS RDS using [shuttle](https://www.shuttle.dev). The following three engines are supported:
 
 - Postgres
 - MySql

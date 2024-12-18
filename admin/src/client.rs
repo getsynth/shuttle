@@ -1,6 +1,10 @@
-use anyhow::{Context, Result};
+use anyhow::Result;
 use shuttle_api_client::ShuttleApiClient;
-use shuttle_common::models::{admin::ProjectResponse, stats};
+use shuttle_common::models::{
+    admin::ProjectResponse,
+    project::{ComputeTier, ProjectResponseBeta, ProjectUpdateRequestBeta},
+    stats,
+};
 
 pub struct Client {
     pub inner: ShuttleApiClient,
@@ -121,16 +125,26 @@ impl Client {
     pub async fn update_project_compute_tier(
         &self,
         project_id: &str,
-        compute_tier: &str,
-    ) -> Result<String> {
+        compute_tier: ComputeTier,
+    ) -> Result<ProjectResponseBeta> {
         self.inner
-            .put(
-                format!("/admin/projects/{}/{}", project_id, compute_tier),
-                Option::<()>::None,
+            .put_json(
+                format!("/projects/{project_id}"),
+                Some(ProjectUpdateRequestBeta {
+                    compute_tier: Some(compute_tier),
+                    ..Default::default()
+                }),
             )
-            .await?
-            .text()
             .await
-            .context("failed to read response text")
+    }
+
+    pub async fn gc_free_tier(&self, days: u32) -> Result<Vec<String>> {
+        let path = format!("/admin/gc/free/{days}");
+        self.inner.get_json(&path).await
+    }
+
+    pub async fn gc_shuttlings(&self, minutes: u32) -> Result<Vec<String>> {
+        let path = format!("/admin/gc/shuttlings/{minutes}");
+        self.inner.get_json(&path).await
     }
 }
