@@ -36,9 +36,9 @@ shuttle-proto = { workspace = true, features = ["provisioner"] }
 uuid = { workspace = true }
 
 [features]
-default = ["setup-tracing"]
+default = ["setup-tracing", "fallible-secrets"]
 api-client-tracing = ["shuttle-api-client/tracing"]
-
+fallible-secrets = []
 setup-tracing = [
     "tracing-subscriber/default",
     "tracing-subscriber/env-filter",

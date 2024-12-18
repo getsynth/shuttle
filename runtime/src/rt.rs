@@ -114,22 +114,36 @@ pub async fn start(loader: impl Loader + Send + 'static, runner: impl Runner + S
     //
     info!("Loading resources");
 
-    trace!("Getting secrets");
-    info!("modified runtime");
-    // let secrets: BTreeMap<String, String> = match client
-    //     .get_secrets_beta(&project_id)
-    //     .await
-    //     .and_then(|r| serde_json::from_value(r.output).context("failed to deserialize secrets"))
-    // {
-    //     Ok(s) => s,
-    //     Err(e) => {
-    //         eprintln!("ERROR: Runtime Secret Loading phase failed: {e}");
-    //         exit(101);
-    //     }
-    // };
+    trace!("Getting secrets{}", {
+        #[cfg(feature = "fallible-secrets")]
+        {
+            "(modified runtime)"
+        }
+        #[cfg(not(feature = "fallible-secrets"))]
+        {
+            ""
+        }
+    });
 
-    // Sort secrets by key
-    let secrets = BTreeMap::new();
+    let secrets = match client.get_secrets_beta(&project_id).await.and_then(|r| {
+        serde_json::from_value::<BTreeMap<String, String>>(r.output)
+            .context("failed to deserialize secrets")
+    }) {
+        Ok(s) => s
+            .into_iter()
+            .map(|(k, v)| (k, Secret::new(v)))
+            .collect::<BTreeMap<String, Secret<String>>>(),
+        #[cfg(feature = "fallible-secrets")]
+        Err(e) => {
+            tracing::error!(error = ?e, "Runtime Secret Loading phase failed");
+            Default::default()
+        }
+        #[cfg(not(feature = "fallible-secrets"))]
+        Err(e) => {
+            eprintln!("ERROR: Runtime Secret Loading phase failed: {e}");
+            exit(101);
+        }
+    };
 
     // TODO: rework resourcefactory
     let factory = ResourceFactory::new(project_name, secrets.clone(), env);
