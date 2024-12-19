@@ -254,7 +254,7 @@ pub async fn update_cargo_shuttle(preview: bool) -> Result<()> {
 
     #[cfg(target_family = "unix")]
     let _ = tokio::process::Command::new("bash")
-        .args(["-c", "curl -sSfL https://www.shuttle.rs/install | bash"])
+        .args(["-c", "curl -sSfL https://www.shuttle.dev/install | bash"])
         .kill_on_drop(true)
         .spawn()
         .context("Failed to spawn bash update process")?
@@ -264,7 +264,7 @@ pub async fn update_cargo_shuttle(preview: bool) -> Result<()> {
 
     #[cfg(target_family = "windows")]
     let _ = tokio::process::Command::new("powershell")
-        .args(["-Command", "iwr https://www.shuttle.rs/install-win | iex"])
+        .args(["-Command", "iwr https://www.shuttle.dev/install-win | iex"])
         .kill_on_drop(true)
         .spawn()
         .context("Failed to spawn powershell update process")?

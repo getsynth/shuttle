@@ -137,4 +137,14 @@ impl Client {
             )
             .await
     }
+
+    pub async fn gc_free_tier(&self, days: u32) -> Result<Vec<String>> {
+        let path = format!("/admin/gc/free/{days}");
+        self.inner.get_json(&path).await
+    }
+
+    pub async fn gc_shuttlings(&self, minutes: u32) -> Result<Vec<String>> {
+        let path = format!("/admin/gc/shuttlings/{minutes}");
+        self.inner.get_json(&path).await
+    }
 }

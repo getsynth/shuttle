@@ -31,7 +31,7 @@ impl ResourceInputBuilder for Metadata {
 
 /// ## Shuttle Secrets
 ///
-/// Plugin for getting secrets in your [Shuttle](https://www.shuttle.rs) service.
+/// Plugin for getting secrets in your [Shuttle](https://www.shuttle.dev) service.
 ///
 /// ### Usage
 ///

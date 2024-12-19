@@ -483,8 +483,6 @@ impl Shuttle {
             println!();
         } else if args.login_args.api_key.is_some() {
             self.login(args.login_args.clone(), offline).await?;
-        } else if args.create_env {
-            bail!("Tried to login to create a Shuttle environment, but no API key was set.")
         }
 
         // 2. Ask for project name or validate the given one
@@ -1030,9 +1028,12 @@ impl Shuttle {
         let (mut tx, mut rx) = client.get_device_auth_ws().await?.split();
 
         // keep the socket alive with ping/pong
-        tokio::spawn(async move {
+        let pinger = tokio::spawn(async move {
             loop {
-                tx.send(Message::Ping(Vec::new())).await.unwrap();
+                if let Err(e) = tx.send(Message::Ping(Vec::new())).await {
+                    error!(error = %e, "Error when pinging websocket");
+                    break;
+                };
                 sleep(Duration::from_secs(20)).await;
             }
         });
@@ -1056,6 +1057,8 @@ impl Shuttle {
             bail!("Failed to receive API key over websocket");
         };
         let key = serde_json::from_str::<KeyMessage>(&key)?.api_key;
+
+        pinger.abort();
 
         Ok(key)
     }
@@ -2446,6 +2449,11 @@ impl Shuttle {
                 let deployment = client
                     .deploy_beta(pid, DeploymentRequestBeta::Image(deployment_req_image_beta))
                     .await?;
+
+                if args.no_follow {
+                    println!("{}", deployment.to_string_colored());
+                    return Ok(());
+                }
 
                 // TODO?: Make it print logs on fail
                 self.track_deployment_status_beta(pid, &deployment.id)

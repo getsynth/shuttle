@@ -6,7 +6,7 @@ function Install-Cargo-Shuttle {
 \__ \ | | | |_| | |_| |_| |  __/
 |___/_| |_|\__,_|\__|\__|_|\___|
 
-https://www.shuttle.rs
+https://www.shuttle.dev
 https://github.com/shuttle-hq/shuttle
 
 Please file an issue if you encounter any problems!

@@ -146,7 +146,7 @@ impl LocalProvisioner {
             Err(error) => {
                 error!("Got unexpected error while inspecting docker container: {error}");
                 error!(
-                    "Make sure Docker is installed and running. For more help: https://docs.shuttle.rs/getting-started/local-run#docker-engines"
+                    "Make sure Docker is installed and running. For more help: https://docs.shuttle.dev/docs/local-run#docker-engines"
                 );
                 Err(Status::internal(error.to_string()))
             }

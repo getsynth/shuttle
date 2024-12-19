@@ -7,8 +7,8 @@
   <a href="https://github.com/shuttle-hq/shuttle/search?l=rust">
     <img alt="language" src="https://img.shields.io/badge/language-Rust-orange.svg">
   </a>
-  <a href="https://docs.shuttle.rs/">
-    <img alt="docs" src="https://img.shields.io/badge/docs-shuttle.rs-orange">
+  <a href="https://docs.shuttle.dev/">
+    <img alt="docs" src="https://img.shields.io/badge/docs-shuttle.dev-orange">
   </a>
   <a href="https://docs.rs/shuttle-runtime">
     <img alt="crate-docs" src="https://img.shields.io/badge/docs-docs.rs-orange">
@@ -69,7 +69,7 @@ Get resources and deploy your apps with a few lines of code.
 
 * __One-line Resource Provisioning:__ Get a database, or any other AWS resource by adding a line of code to your main file. To delete one, just remove that line of code. No config/yaml files required.
 * __Rapid Development:__ It takes 2 minutes from project initialization to a deployed project. It takes another 2 minutes to provision a resource, and get it deployed to production.
-* __First-class support for popular Rust frameworks:__ [Axum](https://docs.shuttle.rs/examples/axum), [Actix Web](https://docs.shuttle.rs/examples/actix), [Rocket](https://docs.shuttle.rs/examples/rocket), and [more](https://docs.shuttle.rs/examples/other)
+* __First-class support for popular Rust frameworks:__ [Axum](https://docs.shuttle.dev/examples/axum), [Actix Web](https://docs.shuttle.dev/examples/actix), [Rocket](https://docs.shuttle.dev/examples/rocket), and [more](https://docs.shuttle.dev/examples/other)
 *  __Security:__ Let us worry about the security & permissions while you focus on writing good code.
 <br>
 <br>
@@ -79,13 +79,13 @@ Get resources and deploy your apps with a few lines of code.
 On Linux and macOS, you can use this install script, which will automatically install the correct target for your OS and distro:
 
 ```sh
-curl -sSfL https://www.shuttle.rs/install | bash
+curl -sSfL https://www.shuttle.dev/install | bash
 ```
 
 On Windows, you can use this install script to do the same:
 
 ```powershell
-iwr "https://www.shuttle.rs/install-win" | iex
+iwr "https://www.shuttle.dev/install-win" | iex
 ```
 
 After installing, log in with:
@@ -119,7 +119,7 @@ URI:           https://hello-world.shuttleapp.rs
 
 Feel free to build on top of the generated `hello-world` boilerplate or take a stab at one of our [examples](https://github.com/shuttle-hq/shuttle-examples).
 
-For the full documentation, visit [our docs](https://docs.shuttle.rs).
+For the full documentation, visit [our docs](https://docs.shuttle.dev).
 <br>
 <br>
 
@@ -196,8 +196,8 @@ Now, if we run `shuttle deploy`, we'll have an up and running project with a dat
 |-|-|
 | [shuttle](https://github.com/shuttle-hq/shuttle) 🚀 (This repo) | The core Shuttle product. Contains all crates that users interact with. |
 | [shuttle-examples](https://github.com/shuttle-hq/shuttle-examples) 👨‍🏫 | Officially maintained examples of projects that can be deployed on Shuttle. Also has a list of [community examples](https://github.com/shuttle-hq/shuttle-examples#community-examples). |
-| [shuttle-docs](https://github.com/shuttle-hq/shuttle-docs) 📃 | Documentation hosted on [docs.shuttle.rs](https://docs.shuttle.rs/). |
-| [www](https://github.com/shuttle-hq/www) 🌍 | Our website [shuttle.rs](https://www.shuttle.rs/), including the [blog](https://www.shuttle.rs/blog/tags/all) and [Launchpad newsletter](https://www.shuttle.rs/launchpad). |
+| [shuttle-docs](https://github.com/shuttle-hq/shuttle-docs) 📃 | Documentation hosted on [docs.shuttle.dev](https://docs.shuttle.dev/). |
+| [www](https://github.com/shuttle-hq/www) 🌍 | Our website [shuttle.dev](https://www.shuttle.dev/), including the [blog](https://www.shuttle.dev/blog/tags/all) and [Launchpad newsletter](https://www.shuttle.dev/launchpad). |
 | [deploy-action](https://github.com/shuttle-hq/deploy-action) ⚙ | GitHub Action for continuous deployments. |
 | [awesome-shuttle](https://github.com/shuttle-hq/awesome-shuttle) 🌟 | An awesome list of Shuttle-hosted projects and resources that users can add to. |
 | [shuttlings](https://github.com/shuttle-hq/shuttlings) ⚔️ | A collection of Rust code challenges. A great way to get started with using Rust and Shuttle. |
@@ -219,11 +219,8 @@ Sign up to the [Algora Console](https://console.algora.io/org/shuttle/bounties?s
 
 # Project Status
 
-Check for any outages and incidents on [Shuttle Status](https://status.shuttle.rs/).
-
 We are currently in Public Beta.
 Watch "releases" of this repo to get notified of major updates!
-Also, check out the [Beta announcement](https://www.shuttle.rs/beta#06) for features we are looking forward to.
 
 - [x] Alpha: We are testing Shuttle, API and deployments may be unstable
 - [x] Public Alpha: Anyone can sign up, but go easy on us,

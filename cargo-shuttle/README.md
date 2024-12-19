@@ -1,10 +1,10 @@
 <!-- markdownlint-disable -->
 <div align="center">
 
-# cargo-shuttle
+# Shuttle CLI
 
 <p align=center>
-  <a href="https://docs.shuttle.rs/">
+  <a href="https://docs.shuttle.dev/">
     <img alt="docs" src="https://img.shields.io/badge/docs-reference-orange">
   </a>
   <a href="https://github.com/shuttle-hq/shuttle/search?l=rust">
@@ -16,24 +16,24 @@
 </p>
 <!-- markdownlint-restore -->
 
-`cargo-shuttle` is the command line tool for deploying Rust apps on [Shuttle](https://www.shuttle.rs/), the Rust-native cloud deployment platform.
+This is the command line tool for deploying Rust apps on [Shuttle](https://www.shuttle.dev/), the Rust-native cloud deployment platform.
 
 </div>
 
 ## Installation
 
-For the full list of installation options, refer to the [Installation docs](https://docs.shuttle.rs/getting-started/installation).
+For the full list of installation options, refer to the [Installation docs](https://docs.shuttle.dev/getting-started/installation).
 
 Linux and macOS:
 
 ```sh
-curl -sSfL https://www.shuttle.rs/install | bash
+curl -sSfL https://www.shuttle.dev/install | bash
 ```
 
 Windows (powershell):
 
 ```powershell
-iwr https://www.shuttle.rs/install-win | iex
+iwr https://www.shuttle.dev/install-win | iex
 ```
 
 Build from source:
@@ -46,10 +46,8 @@ cargo install cargo-shuttle
 
 Run `shuttle help` to see the basic usage.
 
-Full list of commands and more documentation can be viewed on the [CLI docs](https://docs.shuttle.rs/getting-started/shuttle-commands).
+Full list of commands and more documentation can be viewed on the [CLI docs](https://docs.shuttle.dev/guides/cli).
 
 ## Development
-
-Thanks for using `cargo-shuttle`! We’re very happy to have you with us!
 
 To contribute to `cargo-shuttle` or stay updated with our development, please [open an issue, discussion or PR on Github](https://github.com/shuttle-hq/shuttle) and [join our Discord](https://discord.gg/shuttle)! 🚀

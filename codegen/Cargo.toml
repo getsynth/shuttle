@@ -10,8 +10,8 @@ description = "Proc-macro code generator for the shuttle.rs service"
 proc-macro = true
 
 [dependencies]
-proc-macro-error = "1.0.4"
-proc-macro2 = "1.0.47"
+proc-macro-error2 = "2.0.1"
+proc-macro2 = "1.0.89"
 quote = "1.0.21"
 syn = { version = "2.0", features = ["full", "extra-traits"] }
 

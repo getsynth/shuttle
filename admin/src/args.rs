@@ -49,9 +49,6 @@ pub enum Command {
         compute_tier: ComputeTier,
     },
 
-    /// Forcefully idle CCH projects.
-    IdleCch,
-
     SetBetaAccess {
         user_id: String,
     },
@@ -59,7 +56,31 @@ pub enum Command {
         user_id: String,
     },
 
+    /// Renew all custom domain certificates
     RenewCerts,
+
+    /// Garbage collect free tier projects
+    Gc {
+        /// days since last deployment to filter by
+        days: u32,
+        /// loop and stop the returned projects instead of printing them
+        #[arg(long)]
+        stop_deployments: bool,
+        /// limit how many projects to stop
+        #[arg(long, default_value_t = 100)]
+        limit: u32,
+    },
+    /// Garbage collect shuttlings projects
+    GcShuttlings {
+        /// minutes since last deployment to filter by
+        minutes: u32,
+        /// loop and stop the returned projects instead of printing them
+        #[arg(long)]
+        stop_deployments: bool,
+        /// limit how many projects to stop
+        #[arg(long, default_value_t = 100)]
+        limit: u32,
+    },
 }
 
 #[derive(Subcommand, Debug)]

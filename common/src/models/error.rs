@@ -273,6 +273,19 @@ impl From<ProjectNotFound> for ApiError {
 }
 
 #[derive(Debug, Error)]
+#[error("{0} See https://docs.shuttle.dev/platform-update/platform-update for more information and steps to upgrade.")]
+pub struct Deprecated(pub String);
+
+impl From<Deprecated> for ApiError {
+    fn from(err: Deprecated) -> Self {
+        Self {
+            message: err.to_string(),
+            status_code: StatusCode::FORBIDDEN.as_u16(),
+        }
+    }
+}
+
+#[derive(Debug, Error)]
 #[error("Could not automatically delete the following resources: {0:?}. Please reach out to Shuttle support for help.")]
 pub struct ProjectHasResources(pub Vec<String>);
 
