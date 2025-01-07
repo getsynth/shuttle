@@ -5,7 +5,6 @@ use std::str::FromStr;
 use std::sync::Arc;
 use std::time::Duration;
 
-use async_posthog::ClientOptions;
 use clap::Parser;
 use shuttle_backends::client::{permit, PermissionsDal};
 use shuttle_backends::trace::setup_tracing;
@@ -31,12 +30,6 @@ async fn main() {
     let args = Args::parse();
     trace!(args = ?args, "parsed args");
 
-    let posthog_client = async_posthog::client(ClientOptions::new(
-        "phc_cQMQqF5QmcEzXEaVlrhv3yBSNRyaabXYAyiCV7xKHUH".to_string(),
-        "https://eu.posthog.com".to_string(),
-        Duration::from_millis(800),
-    ));
-
     let db_path = args.state.join("gateway.sqlite");
     let db_uri = db_path.to_str().unwrap();
 
@@ -60,7 +53,7 @@ async fn main() {
     MIGRATIONS.run(&db).await.unwrap();
 
     match args.command {
-        Commands::Start(start_args) => start(db, args.state, posthog_client, start_args).await,
+        Commands::Start(start_args) => start(db, args.state, start_args).await,
         Commands::Sync(sync_args) => sync_permit_projects(db, sync_args).await,
     }
 }
@@ -105,12 +98,7 @@ async fn sync_permit_projects(db: SqlitePool, args: SyncArgs) {
     }
 }
 
-async fn start(
-    db: SqlitePool,
-    state_dir: PathBuf,
-    posthog_client: async_posthog::Client,
-    args: StartArgs,
-) {
+async fn start(db: SqlitePool, state_dir: PathBuf, args: StartArgs) {
     let gateway = Arc::new(
         GatewayService::init(
             args.context.clone(),
@@ -188,7 +176,6 @@ async fn start(
     let mut api_builder = ApiBuilder::new()
         .with_service(Arc::clone(&gateway))
         .with_sender(sender.clone())
-        .with_posthog_client(posthog_client)
         .binding_to(args.control);
 
     let mut user_builder = UserServiceBuilder::new()

@@ -39,6 +39,15 @@ impl From<ProvisionResourceRequest> for ProvisionResourceRequestBeta {
                 Type::Database(database::Type::Shared(database::SharedEngine::Postgres)) => {
                     ResourceTypeBeta::DatabaseSharedPostgres
                 }
+                Type::Database(database::Type::AwsRds(database::AwsRdsEngine::Postgres)) => {
+                    ResourceTypeBeta::DatabaseAwsRdsPostgres
+                }
+                Type::Database(database::Type::AwsRds(database::AwsRdsEngine::MariaDB)) => {
+                    ResourceTypeBeta::DatabaseAwsRdsMariaDB
+                }
+                Type::Database(database::Type::AwsRds(database::AwsRdsEngine::MySql)) => {
+                    ResourceTypeBeta::DatabaseAwsRdsMysql
+                }
                 Type::Secrets => ResourceTypeBeta::Secrets,
                 Type::Container => ResourceTypeBeta::Container,
                 r => panic!("Resource not supported on shuttle.dev: {r}"),

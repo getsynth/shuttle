@@ -3,6 +3,8 @@ use std::{fmt::Display, str::FromStr};
 use serde::{Deserialize, Serialize};
 use strum::{Display, EnumString};
 
+use crate::resource::ResourceTypeBeta;
+
 #[derive(Clone, Copy, Debug, Deserialize, Serialize, Eq, PartialEq)]
 #[serde(rename_all = "lowercase")]
 pub enum Type {
@@ -52,6 +54,22 @@ impl FromStr for Type {
             }
         } else {
             Err(format!("'{s}' is an unknown database type"))
+        }
+    }
+}
+
+impl TryFrom<ResourceTypeBeta> for Type {
+    type Error = String;
+
+    fn try_from(value: ResourceTypeBeta) -> Result<Self, Self::Error> {
+        match value {
+            ResourceTypeBeta::DatabaseSharedPostgres => Ok(Self::Shared(SharedEngine::Postgres)),
+            ResourceTypeBeta::DatabaseAwsRdsPostgres => Ok(Self::AwsRds(AwsRdsEngine::Postgres)),
+            ResourceTypeBeta::DatabaseAwsRdsMysql => Ok(Self::AwsRds(AwsRdsEngine::MySql)),
+            ResourceTypeBeta::DatabaseAwsRdsMariaDB => Ok(Self::AwsRds(AwsRdsEngine::MariaDB)),
+            other => Err(format!(
+                "{other} is not a valid database resource on the shuttle.dev platform"
+            )),
         }
     }
 }

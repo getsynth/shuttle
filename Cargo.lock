@@ -224,19 +224,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "async-posthog"
-version = "0.2.3"
-source = "git+https://github.com/shuttle-hq/posthog-rs?branch=main#f20f60de7eb786ea80d7a276073fecdfc697bc61"
-dependencies = [
- "posthog-core",
- "reqwest 0.12.9",
- "serde",
- "serde_json",
- "thiserror 1.0.67",
- "tokio",
-]
-
-[[package]]
 name = "async-stream"
 version = "0.3.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -999,7 +986,7 @@ dependencies = [
 
 [[package]]
 name = "cargo-shuttle"
-version = "0.49.0"
+version = "0.50.0"
 dependencies = [
  "anyhow",
  "assert_cmd",
@@ -4307,17 +4294,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "posthog-core"
-version = "0.1.0"
-source = "git+https://github.com/shuttle-hq/posthog-rs?branch=main#f20f60de7eb786ea80d7a276073fecdfc697bc61"
-dependencies = [
- "chrono",
- "serde",
- "serde_json",
- "thiserror 1.0.67",
-]
-
-[[package]]
 name = "powerfmt"
 version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -5464,7 +5440,7 @@ checksum = "0fda2ff0d084019ba4d7c6f371c95d8fd75ce3524c3cb8fb653a3023f6323e64"
 
 [[package]]
 name = "shuttle-admin"
-version = "0.49.0"
+version = "0.50.0"
 dependencies = [
  "anyhow",
  "clap",
@@ -5481,7 +5457,7 @@ dependencies = [
 
 [[package]]
 name = "shuttle-api-client"
-version = "0.49.0"
+version = "0.50.0"
 dependencies = [
  "anyhow",
  "async-trait",
@@ -5504,7 +5480,7 @@ dependencies = [
 
 [[package]]
 name = "shuttle-auth"
-version = "0.49.0"
+version = "0.50.0"
 dependencies = [
  "anyhow",
  "async-stripe",
@@ -5542,7 +5518,7 @@ dependencies = [
 
 [[package]]
 name = "shuttle-backends"
-version = "0.49.0"
+version = "0.50.0"
 dependencies = [
  "anyhow",
  "async-trait",
@@ -5592,7 +5568,7 @@ dependencies = [
 
 [[package]]
 name = "shuttle-codegen"
-version = "0.49.0"
+version = "0.50.0"
 dependencies = [
  "pretty_assertions",
  "proc-macro-error2",
@@ -5609,7 +5585,7 @@ dependencies = [
 
 [[package]]
 name = "shuttle-common"
-version = "0.49.0"
+version = "0.50.0"
 dependencies = [
  "anyhow",
  "async-trait",
@@ -5648,7 +5624,7 @@ dependencies = [
 
 [[package]]
 name = "shuttle-common-tests"
-version = "0.49.0"
+version = "0.50.0"
 dependencies = [
  "cargo-shuttle",
  "hyper 0.14.31",
@@ -5666,7 +5642,7 @@ dependencies = [
 
 [[package]]
 name = "shuttle-deployer"
-version = "0.49.0"
+version = "0.50.0"
 dependencies = [
  "anyhow",
  "async-trait",
@@ -5712,10 +5688,9 @@ dependencies = [
 
 [[package]]
 name = "shuttle-gateway"
-version = "0.49.0"
+version = "0.50.0"
 dependencies = [
  "anyhow",
- "async-posthog",
  "async-trait",
  "axum",
  "axum-server",
@@ -5776,7 +5751,7 @@ dependencies = [
 
 [[package]]
 name = "shuttle-logger"
-version = "0.49.0"
+version = "0.50.0"
 dependencies = [
  "async-trait",
  "chrono",
@@ -5802,7 +5777,7 @@ dependencies = [
 
 [[package]]
 name = "shuttle-proto"
-version = "0.49.0"
+version = "0.50.0"
 dependencies = [
  "anyhow",
  "async-trait",
@@ -5822,7 +5797,7 @@ dependencies = [
 
 [[package]]
 name = "shuttle-provisioner"
-version = "0.49.0"
+version = "0.50.0"
 dependencies = [
  "aws-config",
  "aws-sdk-rds",
@@ -5849,7 +5824,7 @@ dependencies = [
 
 [[package]]
 name = "shuttle-resource-recorder"
-version = "0.49.0"
+version = "0.50.0"
 dependencies = [
  "async-trait",
  "chrono",
@@ -5874,7 +5849,7 @@ dependencies = [
 
 [[package]]
 name = "shuttle-runtime"
-version = "0.49.0"
+version = "0.50.0"
 dependencies = [
  "anyhow",
  "async-trait",
@@ -5899,7 +5874,7 @@ dependencies = [
 
 [[package]]
 name = "shuttle-service"
-version = "0.49.0"
+version = "0.50.0"
 dependencies = [
  "anyhow",
  "async-trait",

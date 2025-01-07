@@ -106,6 +106,8 @@ pub enum ComputeTier {
     S,
     M,
     L,
+    XL,
+    XXL,
 }
 
 #[derive(Clone, Debug, Deserialize, Serialize, EnumString)]

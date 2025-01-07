@@ -2155,6 +2155,20 @@ impl Shuttle {
             run_args.port,
         );
 
+        let mut envs = vec![
+            ("SHUTTLE_BETA", "true".to_owned()),
+            ("SHUTTLE_PROJECT_ID", "proj_LOCAL".to_owned()),
+            ("SHUTTLE_PROJECT_NAME", project_name),
+            ("SHUTTLE_ENV", Environment::Local.to_string()),
+            ("SHUTTLE_RUNTIME_IP", ip.to_string()),
+            ("SHUTTLE_RUNTIME_PORT", run_args.port.to_string()),
+            ("SHUTTLE_API", format!("http://127.0.0.1:{}", api_port)),
+        ];
+        // Use a nice debugging tracing level if user does not provide their own
+        if debug && std::env::var("RUST_LOG").is_err() {
+            envs.push(("RUST_LOG", "info,shuttle=trace,reqwest=debug".to_owned()));
+        }
+
         info!(
             path = %runtime_executable.display(),
             "Spawning runtime process",
@@ -2163,26 +2177,7 @@ impl Shuttle {
             dunce::canonicalize(runtime_executable).context("canonicalize path of executable")?,
         )
         .current_dir(&service.workspace_path)
-        .envs([
-            ("SHUTTLE_BETA", "true"),
-            ("SHUTTLE_PROJECT_ID", "proj_LOCAL"),
-            ("SHUTTLE_PROJECT_NAME", project_name.as_str()),
-            ("SHUTTLE_ENV", Environment::Local.to_string().as_str()),
-            ("SHUTTLE_RUNTIME_IP", ip.to_string().as_str()),
-            ("SHUTTLE_RUNTIME_PORT", run_args.port.to_string().as_str()),
-            (
-                "SHUTTLE_API",
-                format!("http://127.0.0.1:{}", api_port).as_str(),
-            ),
-            (
-                "RUST_LOG",
-                if debug {
-                    "info,shuttle=trace,reqwest=debug"
-                } else {
-                    "info"
-                },
-            ),
-        ])
+        .envs(envs)
         .stdout(std::process::Stdio::piped())
         .stderr(std::process::Stdio::piped())
         .kill_on_drop(true)

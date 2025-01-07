@@ -1,6 +1,6 @@
 [package]
 name = "shuttle-gateway"
-version = "0.49.0"
+version = "0.50.0"
 edition.workspace = true
 license.workspace = true
 publish = false
@@ -10,7 +10,6 @@ shuttle-backends = { workspace = true, features = ["sqlx"] }
 shuttle-common = { workspace = true, features = ["models", "persist"] }
 shuttle-proto = { workspace = true, features = ["provisioner-client"] }
 
-async-posthog = { git = "https://github.com/shuttle-hq/posthog-rs", branch = "main" }
 async-trait = { workspace = true }
 axum = { workspace = true, features = ["default", "headers"] }
 axum-server = { version = "0.5.1", features = ["tls-rustls"] }

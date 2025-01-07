@@ -10,7 +10,7 @@ executors:
   docker-rust:
     docker:
       # Note: Let CI use our MSRV, rather than latest
-      - image: cimg/rust:1.78.0
+      - image: cimg/rust:1.81.0
     resource_class: small
   machine-ubuntu:
     machine:
@@ -103,7 +103,7 @@ commands:
       - run:
           name: Install Rust (MSRV)
           # Note: Let CI use our MSRV, rather than latest
-          command: which cargo || curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain 1.78.0
+          command: which cargo || curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain 1.81.0
   install-protoc:
     steps:
       - run:

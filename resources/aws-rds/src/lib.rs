@@ -5,7 +5,8 @@ use serde::{Deserialize, Serialize};
 use shuttle_service::{
     database,
     resource::{ProvisionResourceRequest, ShuttleResourceOutput, Type},
-    DatabaseResource, DbInput, Error, IntoResource, ResourceFactory, ResourceInputBuilder,
+    DatabaseResource, DbInput, Environment, Error, IntoResource, ResourceFactory,
+    ResourceInputBuilder,
 };
 
 #[cfg(any(feature = "diesel-async-bb8", feature = "diesel-async-deadpool"))]
@@ -21,6 +22,14 @@ use diesel_async::pooled_connection::deadpool as diesel_deadpool;
 const MIN_CONNECTIONS: u32 = 1;
 #[allow(dead_code)]
 const MAX_CONNECTIONS: u32 = 5;
+
+/// Conditionally request a Shuttle resource
+#[derive(Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum MaybeRequest {
+    Request(ProvisionResourceRequest),
+    NotRequest(DatabaseResource),
+}
 
 macro_rules! aws_engine {
     ($feature:expr, $struct_ident:ident) => {
@@ -50,19 +59,36 @@ macro_rules! aws_engine {
             #[cfg(feature = $feature)]
             #[async_trait::async_trait]
             impl ResourceInputBuilder for $struct_ident {
-                type Input = ProvisionResourceRequest;
+                type Input = MaybeRequest;
                 type Output = OutputWrapper;
 
-                async fn build(self, _factory: &ResourceFactory) -> Result<Self::Input, Error> {
-                    Ok(ProvisionResourceRequest::new(
-                        Type::Database(
-                            database::Type::AwsRds(
-                                database::AwsRdsEngine::$struct_ident
-                            )
-                        ),
-                        serde_json::to_value(&self.0).unwrap(),
-                        serde_json::Value::Null,
-                    ))
+                async fn build(self, factory: &ResourceFactory) -> Result<Self::Input, Error> {
+                    let md = factory.get_metadata();
+                    Ok(match md.env {
+                        Environment::Deployment => MaybeRequest::Request(ProvisionResourceRequest::new(
+                            Type::Database(
+                                database::Type::AwsRds(
+                                    database::AwsRdsEngine::$struct_ident
+                                )
+                            ),
+                            serde_json::to_value(&self.0).unwrap(),
+                            serde_json::Value::Null,
+                        )),
+                        Environment::Local => match self.0.local_uri {
+                            Some(local_uri) => {
+                                MaybeRequest::NotRequest(DatabaseResource::ConnectionString(local_uri))
+                            }
+                            None => MaybeRequest::Request(ProvisionResourceRequest::new(
+                                Type::Database(
+                                    database::Type::AwsRds(
+                                        database::AwsRdsEngine::$struct_ident
+                                    )
+                                ),
+                                serde_json::to_value(&self.0).unwrap(),
+                                serde_json::Value::Null,
+                            )),
+                        },
+                    })
                 }
             }
         }
@@ -76,14 +102,21 @@ aws_engine!("mysql", MySql);
 aws_engine!("mariadb", MariaDB);
 
 #[derive(Serialize, Deserialize)]
-#[serde(transparent)]
-pub struct OutputWrapper(ShuttleResourceOutput<DatabaseResource>);
+#[serde(untagged)]
+pub enum OutputWrapper {
+    Alpha(ShuttleResourceOutput<DatabaseResource>),
+    Beta(DatabaseResource),
+}
 
 #[async_trait]
 impl IntoResource<String> for OutputWrapper {
     async fn into_resource(self) -> Result<String, Error> {
-        Ok(match self.0.output {
-            DatabaseResource::ConnectionString(s) => s.clone(),
+        let output = match self {
+            Self::Alpha(o) => o.output,
+            Self::Beta(o) => o,
+        };
+        Ok(match output {
+            DatabaseResource::ConnectionString(s) => s,
             DatabaseResource::Info(info) => info.connection_string_shuttle(),
         })
     }

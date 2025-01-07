@@ -602,14 +602,21 @@ pub mod beta {
                     serde_json::from_slice(&body).context("deserializing resource request")?;
 
                 let response = match shuttle_resource.r#type {
-                    ResourceTypeBeta::DatabaseSharedPostgres => {
+                    ResourceTypeBeta::DatabaseSharedPostgres
+                    | ResourceTypeBeta::DatabaseAwsRdsMariaDB
+                    | ResourceTypeBeta::DatabaseAwsRdsMysql
+                    | ResourceTypeBeta::DatabaseAwsRdsPostgres => {
                         let config: DbInput =
                             serde_json::from_value(shuttle_resource.config.clone())
                                 .context("deserializing resource config")?;
                         let res = DatabaseResource::Info(
                             prov.provision_database(Request::new(DatabaseRequest {
                                 project_name: state.project_name.clone(),
-                                db_type: Some(database::Type::Shared(database::SharedEngine::Postgres).into()),
+                                db_type: Some(
+                                    database::Type::try_from(shuttle_resource.r#type)
+                                        .map_err(anyhow::Error::msg)?
+                                        .into()
+                                ),
                                 db_name: config.db_name,
                             }))
                             .await
@@ -642,7 +649,6 @@ pub mod beta {
                         config: shuttle_resource.config,
                         output: serde_json::to_value(&state.secrets).unwrap(),
                     },
-                    other => unimplemented!("Resource {other} not supported yet"),
                 };
 
                 let table =

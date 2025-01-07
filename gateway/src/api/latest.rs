@@ -28,8 +28,8 @@ use shuttle_backends::request_span;
 use shuttle_backends::ClaimExt;
 use shuttle_common::claims::{Claim, Scope, EXP_MINUTES};
 use shuttle_common::models::error::{
-    ApiError, InvalidCustomDomain, InvalidTeamName, ProjectCorrupted, ProjectHasBuildingDeployment,
-    ProjectHasResources, ProjectHasRunningDeployment,
+    ApiError, Deprecated, InvalidCustomDomain, InvalidTeamName, ProjectCorrupted,
+    ProjectHasBuildingDeployment, ProjectHasResources, ProjectHasRunningDeployment,
 };
 use shuttle_common::models::{admin::ProjectResponse, project, stats};
 use shuttle_common::models::{service, team};
@@ -40,7 +40,7 @@ use tokio::sync::mpsc::Sender;
 use tokio::sync::{Mutex, MutexGuard};
 use tower::ServiceBuilder;
 use tower_http::cors::{AllowOrigin, CorsLayer};
-use tracing::{debug, error, field, info, instrument, trace, warn, Span};
+use tracing::{debug, field, info, instrument, trace, warn, Span};
 use ttl_cache::TtlCache;
 use ulid::Ulid;
 use uuid::Uuid;
@@ -418,25 +418,13 @@ async fn delete_project(
 }
 
 #[instrument(skip_all, fields(shuttle.project.name = %scoped_user.scope))]
-async fn override_create_service(
-    state: State<RouterState>,
-    scoped_user: ScopedUser,
-    req: Request<Body>,
-) -> Result<Response<Body>, ApiError> {
-    let user_id = scoped_user.claim.sub.clone();
-    let posthog_client = state.posthog_client.clone();
-    tokio::spawn(async move {
-        let event = async_posthog::Event::new("shuttle_api_start_deployment", &user_id);
-
-        if let Err(err) = posthog_client.capture(event).await {
-            error!(
-                error = &err as &dyn std::error::Error,
-                "failed to send event to posthog"
-            )
-        };
-    });
-
-    route_project(state, scoped_user, req).await
+async fn override_create_service(scoped_user: ScopedUser) -> Result<Response<Body>, ApiError> {
+    // Creating new deployments on the shuttle.rs platform is deprecated as of the first of January
+    // 2025.
+    return Err(Deprecated(
+        "Creating new deployments on the shuttle.rs platform has been deprecated.".to_string(),
+    )
+    .into());
 }
 
 #[instrument(skip_all, fields(shuttle.project.name = %scoped_user.scope))]
@@ -1013,7 +1001,6 @@ pub(crate) struct RouterState {
     pub service: Arc<GatewayService>,
     pub sender: Sender<BoxedTask>,
     pub running_builds: Arc<Mutex<TtlCache<Uuid, ()>>>,
-    pub posthog_client: async_posthog::Client,
 }
 
 #[derive(Default)]
@@ -1021,7 +1008,6 @@ pub struct ApiBuilder {
     router: Router<RouterState>,
     service: Option<Arc<GatewayService>>,
     sender: Option<Sender<BoxedTask>>,
-    posthog_client: Option<async_posthog::Client>,
     bind: Option<SocketAddr>,
 }
 
@@ -1070,11 +1056,6 @@ impl ApiBuilder {
 
     pub fn with_sender(mut self, sender: Sender<BoxedTask>) -> Self {
         self.sender = Some(sender);
-        self
-    }
-
-    pub fn with_posthog_client(mut self, posthog_client: async_posthog::Client) -> Self {
-        self.posthog_client = Some(posthog_client);
         self
     }
 
@@ -1221,7 +1202,6 @@ impl ApiBuilder {
     pub fn into_router(self) -> Router {
         let service = self.service.expect("a GatewayService is required");
         let sender = self.sender.expect("a task Sender is required");
-        let posthog_client = self.posthog_client.expect("a task Sender is required");
 
         // Allow about 4 cores per build, but use at most 75% (* 3 / 4) of all cores and at least 1 core
         // Assumes each builder (deployer) is assigned 4 cores
@@ -1232,7 +1212,6 @@ impl ApiBuilder {
         self.router.with_state(RouterState {
             service,
             sender,
-            posthog_client,
             running_builds,
         })
     }

@@ -7,7 +7,38 @@ See [conventional commits](https://www.conventionalcommits.org/) for commit guid
 
 **For proper release notes with more details such as upgrading guidelines, check out the [releases page](https://github.com/shuttle-hq/shuttle/releases).**
 
-## [0.49.0](https://github.com/shuttle-hq/shuttle/compare/v0.48.3..0.49.0) - 2024-11-12
+## [0.50.0](https://github.com/shuttle-hq/shuttle/compare/v0.49.0..0.50.0) - 2025-01-07
+
+### Features
+
+- Deprecate new deployments ([#1934](https://github.com/shuttle-hq/shuttle/issues/1934)) - ([6ece318](https://github.com/shuttle-hq/shuttle/commit/6ece318b5b1a7bdbb232126346d0ca0794634141))
+- Update rds resource type for new platform compatibility ([#1945](https://github.com/shuttle-hq/shuttle/issues/1945)) - ([979a3e0](https://github.com/shuttle-hq/shuttle/commit/979a3e09a56973ac3e0a47e43c6eeda74712e24d))
+- Add xl and xxl compute tiers ([#1946](https://github.com/shuttle-hq/shuttle/issues/1946)) - ([84c66ad](https://github.com/shuttle-hq/shuttle/commit/84c66ad0fe179695963fd1b522a9b959f489be62))
+- Bump msrv to 1.81, our images to 1.83 ([#1942](https://github.com/shuttle-hq/shuttle/issues/1942)) - ([9925f4e](https://github.com/shuttle-hq/shuttle/commit/9925f4eb27cc66d6b5675e6d4e3b318becfdbd4f))
+- Deprecate new project creation ([#1931](https://github.com/shuttle-hq/shuttle/issues/1931)) - ([52525c1](https://github.com/shuttle-hq/shuttle/commit/52525c106601c2363ee35f1626dc6d912c87ec6d))
+
+### Bug Fixes
+
+- *(cargo-shuttle)* Don't override user provided RUST_LOG on local run ([#1930](https://github.com/shuttle-hq/shuttle/issues/1930)) - ([48b8347](https://github.com/shuttle-hq/shuttle/commit/48b83475933d8569d89be9b42f1edfb8bdc3e6bb))
+- Admin and cli fixes ([#1922](https://github.com/shuttle-hq/shuttle/issues/1922)) - ([5431b1f](https://github.com/shuttle-hq/shuttle/commit/5431b1fe8a0269518a9f92047d844e62c631a883))
+- Cargo-audit version ([#1919](https://github.com/shuttle-hq/shuttle/issues/1919)) - ([2566755](https://github.com/shuttle-hq/shuttle/commit/25667552a78d7323ed6b142b331a24a69fcce60e))
+
+### Documentation
+
+- *(shuttle-service)* Typo fix ([#1935](https://github.com/shuttle-hq/shuttle/issues/1935)) - ([97c35d8](https://github.com/shuttle-hq/shuttle/commit/97c35d8971fa7ee9bbfa70d7e572c0f52dfcf5c1))
+
+### Miscellaneous Tasks
+
+- Update examples - ([4abff0f](https://github.com/shuttle-hq/shuttle/commit/4abff0f3e201dd236db413160c149e6c05f7ca21))
+- V0.50.0 - ([f166a87](https://github.com/shuttle-hq/shuttle/commit/f166a87c39e7b38e4abe4682232b613cd956b0d0))
+
+### Miscellaneous
+
+- Update the Turso resource to use libsql 0.6.0 ([#1940](https://github.com/shuttle-hq/shuttle/issues/1940)) - ([cd39fd0](https://github.com/shuttle-hq/shuttle/commit/cd39fd0a0d713bb27573dbc27fbc44f2337b0758))
+- Shuttle.dev cleanup ([#1920](https://github.com/shuttle-hq/shuttle/issues/1920)) - ([89affe0](https://github.com/shuttle-hq/shuttle/commit/89affe02b6335584d3b71d498e51b5baebdbf2b9))
+- Added proc-macro-error2 dependency ([#1921](https://github.com/shuttle-hq/shuttle/issues/1921)) - ([d81c72b](https://github.com/shuttle-hq/shuttle/commit/d81c72b08afb4fe861a4a752f9a23243a11d8192))
+
+## [0.49.0](https://github.com/shuttle-hq/shuttle/compare/v0.48.3..v0.49.0) - 2024-11-12
 
 ### Features
 
@@ -22,16 +53,11 @@ See [conventional commits](https://www.conventionalcommits.org/) for commit guid
 
 - *(api-client)* Update archive endpoint ([#1914](https://github.com/shuttle-hq/shuttle/issues/1914)) - ([c8e6d15](https://github.com/shuttle-hq/shuttle/commit/c8e6d15243dff7c0ae6afbb0f931ba6f9f7928f9))
 - *(cargo-shuttle)* Shell completion, refactors ([#1909](https://github.com/shuttle-hq/shuttle/issues/1909)) - ([b91de7a](https://github.com/shuttle-hq/shuttle/commit/b91de7afa79174041e23437dc62f3eb1cdf4a113))
-- Hide redeploy command - ([9c7c887](https://github.com/shuttle-hq/shuttle/commit/9c7c887196c02e5012600fe1b5328c4ac2ecb552))
 - Don't attempt project linking on local run, create project and link on beta init ([#1911](https://github.com/shuttle-hq/shuttle/issues/1911)) - ([bfc05ec](https://github.com/shuttle-hq/shuttle/commit/bfc05ec8cd687334441a8f7767c497cb3fe24239))
 
 ### Miscellaneous Tasks
 
-- V0.49.0 - ([09335f6](https://github.com/shuttle-hq/shuttle/commit/09335f689a64dffc80cac5e73bd27fd26d12f55f))
-
-### Miscellaneous
-
-- Examples - ([5cad831](https://github.com/shuttle-hq/shuttle/commit/5cad831f3b5ab86eeca48b2fc3beb29947bea0c2))
+- V0.49.0 ([#1917](https://github.com/shuttle-hq/shuttle/issues/1917)) - ([cef6c28](https://github.com/shuttle-hq/shuttle/commit/cef6c2802c2ff98e2733306aed5e92372f46c9e5))
 
 ## [0.48.3](https://github.com/shuttle-hq/shuttle/compare/v0.48.2..v0.48.3) - 2024-10-10
 
@@ -693,6 +719,7 @@ See [conventional commits](https://www.conventionalcommits.org/) for commit guid
 - *(logger)* Rate limit based on peer address ([#1351](https://github.com/shuttle-hq/shuttle/issues/1351)) - ([4a99d4a](https://github.com/shuttle-hq/shuttle/commit/4a99d4a9351e7e557759a9300c2178f47c68d746))
 - *(shuttle-serenity)* Support serenity 0.11 and 0.12, optional native tls ([#1416](https://github.com/shuttle-hq/shuttle/issues/1416)) - ([52c06a7](https://github.com/shuttle-hq/shuttle/commit/52c06a7ab9c17398ec8ff5328c99779736e3f819))
 - Limit rds access to pro users ([#1398](https://github.com/shuttle-hq/shuttle/issues/1398)) - ([30b6465](https://github.com/shuttle-hq/shuttle/commit/30b6465be9ff55f54a2b0d9f4b33e81d3401a60c))
+- feat(cargo-shuttle): ability to force a name to be used in init ([#1410](https://github.com/shuttle-hq/shuttle/issues/1410)) - ([8e6deae](https://github.com/shuttle-hq/shuttle/commit/8e6deaea60ffc2cba3d4ba136ef095c5fb351e58))
 - Remove panamax registry override from deployers ([#1399](https://github.com/shuttle-hq/shuttle/issues/1399)) - ([4798777](https://github.com/shuttle-hq/shuttle/commit/4798777273ae29435a3a8cb05dfe08dfeabf45ac))
 
 ### Bug Fixes
@@ -725,7 +752,6 @@ See [conventional commits](https://www.conventionalcommits.org/) for commit guid
 
 - *(auth)* Added service healthcheck ([#1394](https://github.com/shuttle-hq/shuttle/issues/1394)) - ([44dfa9b](https://github.com/shuttle-hq/shuttle/commit/44dfa9b08048897a9de5f025b672bbda3eee6479))
 - Delete a project even if the current state is destroyed ([#1413](https://github.com/shuttle-hq/shuttle/issues/1413)) - ([f37a0e8](https://github.com/shuttle-hq/shuttle/commit/f37a0e87c06938f0109e718c78085cb4c9267173))
-- feat(cargo-shuttle): ability to force a name to be used in init ([#1410](https://github.com/shuttle-hq/shuttle/issues/1410)) - ([8e6deae](https://github.com/shuttle-hq/shuttle/commit/8e6deaea60ffc2cba3d4ba136ef095c5fb351e58))
 - Rocket-0.5.0 stable ([#1401](https://github.com/shuttle-hq/shuttle/issues/1401)) - ([c88f0bc](https://github.com/shuttle-hq/shuttle/commit/c88f0bc9cc7ebcc56e2ecbaea30142e8d6e8ee35))
 
 ## [0.33.0](https://github.com/shuttle-hq/shuttle/compare/v0.32.0..v0.33.0) - 2023-11-16

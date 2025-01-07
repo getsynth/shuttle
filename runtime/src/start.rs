@@ -79,7 +79,13 @@ pub async fn start(loader: impl Loader + Send + 'static, runner: impl Runner + S
                 // let user override RUST_LOG in local run if they want to
                 EnvFilter::try_from_default_env()
                     // otherwise use our default
-                    .or_else(|_| EnvFilter::try_new("info,shuttle=trace"))
+                    .or_else(|_| {
+                        EnvFilter::try_new(if args.beta {
+                            "info"
+                        } else {
+                            "info,shuttle=trace"
+                        })
+                    })
                     .unwrap(),
             )
             .init();

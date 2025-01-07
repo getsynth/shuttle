@@ -120,7 +120,7 @@ impl<R: Serialize + DeserializeOwned + Send> IntoResource<R> for ShuttleResource
 pub trait Service: Send {
     /// This function is run exactly once on startup of a deployment.
     ///
-    /// The passed [`SocketAddr`] receives proxied HTTP traffic from you Shuttle subdomain (or custom domain).
+    /// The passed [`SocketAddr`] receives proxied HTTP traffic from your Shuttle subdomain (or custom domain).
     /// Binding to the address is only relevant if this service is an HTTP server.
     async fn bind(mut self, addr: SocketAddr) -> Result<(), error::Error>;
 }

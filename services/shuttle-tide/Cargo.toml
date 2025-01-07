@@ -1,6 +1,6 @@
 [package]
 name = "shuttle-tide"
-version = "0.49.0"
+version = "0.50.0"
 edition = "2021"
 license = "Apache-2.0"
 description = "Service implementation to run a tide webserver on shuttle"
@@ -14,4 +14,4 @@ keywords = ["shuttle-service", "tide"]
 # https://github.com/http-rs/tide/issues/791
 async-std = { version = "1.12.0", features = ["tokio1"] }
 tide = "0.16.0"
-shuttle-runtime = { path = "../../runtime", version = "0.49.0", default-features = false }
+shuttle-runtime = { path = "../../runtime", version = "0.50.0", default-features = false }

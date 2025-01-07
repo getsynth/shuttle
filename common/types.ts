@@ -139,6 +139,8 @@ export enum ComputeTier {
 	S = "s",
 	M = "m",
 	L = "l",
+	XL = "xl",
+	XXL = "xxl",
 }
 
 export interface ProjectResponseBeta {
