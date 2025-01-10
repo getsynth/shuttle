@@ -84,7 +84,7 @@ pub async fn start(loader: impl Loader + Send + 'static, runner: impl Runner + S
     } = BetaEnvArgs::parse();
 
     let service_addr = SocketAddr::new(ip, port);
-    let client = ShuttleApiClient::new(api_url, api_key, None);
+    let client = ShuttleApiClient::new(api_url, api_key, None, None);
 
     // start a health check server if requested
     if let Some(healthz_port) = healthz_port {

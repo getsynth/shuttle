@@ -1,12 +1,12 @@
 ## Shuttle service integration for the Axum web framework
 
-Axum 0.7 is used by default.
+Axum 0.8 is used by default.
 
-Axum 0.6 is supported by using these feature flags:
+Axum 0.7 is supported by using these feature flags:
 
 ```toml,ignore
-axum = "0.6.0"
-shuttle-axum = { version = "0.50.0", default-features = false, features = ["axum-0-6"] }
+axum = "0.7.3"
+shuttle-axum = { version = "...", default-features = false, features = ["axum-0-7"] }
 ```
 
 ### Example

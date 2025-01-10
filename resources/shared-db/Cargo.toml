@@ -1,6 +1,6 @@
 [package]
 name = "shuttle-shared-db"
-version = "0.50.0"
+version = "0.51.0"
 edition = "2021"
 license = "Apache-2.0"
 description = "Plugin for managing shared databases on shuttle"
@@ -11,9 +11,10 @@ keywords = ["shuttle-service", "database"]
 async-trait = "0.1.56"
 diesel-async = { version = "0.4.1", optional = true }
 mongodb = { version = "2.3.0", optional = true }
+opendal = { version = "0.51", optional = true }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
-shuttle-service = { path = "../../service", version = "0.50.0" }
+shuttle-service = { path = "../../service", version = "0.51.0" }
 sqlx = { version = "0.8.2", optional = true }
 
 [features]
@@ -31,3 +32,6 @@ diesel-async-deadpool = ["diesel-async", "diesel-async/deadpool"]
 # Postgres with an sqlx PgPool
 sqlx = ["dep:sqlx", "sqlx/runtime-tokio", "sqlx/tls-rustls"]
 sqlx-native-tls = ["dep:sqlx", "sqlx/runtime-tokio", "sqlx/tls-native-tls"]
+
+# OpenDAL backed by Postgres
+opendal-postgres = ["dep:opendal", "opendal/services-postgresql", "postgres", "sqlx"]

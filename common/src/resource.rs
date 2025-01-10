@@ -294,7 +294,7 @@ mod _sqlx {
         }
     }
 
-    impl<'q> sqlx::Encode<'q, sqlx::Postgres> for ResourceState {
+    impl sqlx::Encode<'_, sqlx::Postgres> for ResourceState {
         fn encode_by_ref(&self, buf: &mut PgArgumentBuffer) -> sqlx::encode::IsNull {
             #[allow(clippy::needless_borrows_for_generic_args)]
             <&str as sqlx::Encode<Postgres>>::encode(&self.to_string(), buf)

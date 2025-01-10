@@ -1,6 +1,6 @@
 [package]
 name = "shuttle-openai"
-version = "0.50.0"
+version = "0.51.0"
 edition = "2021"
 license = "Apache-2.0"
 description = "Shuttle plugin for connecting to OpenAI"
@@ -12,4 +12,4 @@ async-openai = "0.23.0"
 async-trait = "0.1.56"
 serde = { version = "1.0.203", features = ["derive"] }
 serde_json = "1"
-shuttle-service = { path = "../../service", version = "0.50.0" }
+shuttle-service = { path = "../../service", version = "0.51.0" }

@@ -1,6 +1,6 @@
 [package]
 name = "shuttle-common"
-version = "0.50.0"
+version = "0.51.0"
 edition.workspace = true
 license.workspace = true
 repository.workspace = true
@@ -23,7 +23,6 @@ jsonwebtoken = { workspace = true, optional = true }
 opentelemetry = { workspace = true, optional = true }
 opentelemetry-http = { workspace = true, optional = true }
 pin-project = { workspace = true, optional = true }
-rand = { workspace = true, optional = true }
 reqwest = { workspace = true, optional = true }
 semver = { workspace = true }
 serde = { workspace = true, features = ["derive", "std"] }
@@ -41,6 +40,9 @@ url = { workspace = true, features = ["serde"] }
 uuid = { workspace = true, features = ["v4", "serde"], optional = true }
 zeroize = { workspace = true }
 wiremock = { workspace = true, optional = true }
+
+[dev-dependencies]
+proptest = "1.1.0"
 
 [features]
 axum = ["dep:axum"]
@@ -68,12 +70,11 @@ extract_propagation = [
     "tracing-opentelemetry",
 ]
 models = ["async-trait", "reqwest", "service"]
-persist = ["sqlx", "rand"]
 sqlx = ["dep:sqlx", "sqlx/sqlite", "sqlx/postgres"]
 service = ["chrono/serde", "display", "tracing", "tracing-subscriber", "uuid"]
 test-utils = ["wiremock"]
 tonic = ["dep:tonic"]
 tracing = ["dep:tracing"]
 
-[dev-dependencies]
-proptest = "1.1.0"
+[package.metadata.docs.rs]
+all-features = true

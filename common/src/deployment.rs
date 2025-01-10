@@ -119,7 +119,7 @@ mod tests {
             Environment::Deployment,
             Environment::from_str("production").unwrap()
         );
-        assert!(State::from_str("somewhere_else").is_err());
+        assert!(Environment::from_str("somewhere_else").is_err());
         assert_eq!(format!("{:?}", Environment::Local), "Local".to_owned());
         assert_eq!(format!("{}", Environment::Local), "local".to_owned());
         assert_eq!(Environment::Local.to_string(), "local".to_owned());

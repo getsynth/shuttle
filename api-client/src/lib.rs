@@ -43,12 +43,20 @@ pub struct ShuttleApiClient {
 }
 
 impl ShuttleApiClient {
-    pub fn new(api_url: String, api_key: Option<String>, headers: Option<HeaderMap>) -> Self {
+    pub fn new(
+        api_url: String,
+        api_key: Option<String>,
+        headers: Option<HeaderMap>,
+        timeout: Option<u64>,
+    ) -> Self {
         let mut builder = reqwest::Client::builder();
         if let Some(h) = headers {
             builder = builder.default_headers(h);
         }
-        let client = builder.timeout(Duration::from_secs(60)).build().unwrap();
+        let client = builder
+            .timeout(Duration::from_secs(timeout.unwrap_or(60)))
+            .build()
+            .unwrap();
 
         let builder = reqwest_middleware::ClientBuilder::new(client);
         #[cfg(feature = "tracing")]

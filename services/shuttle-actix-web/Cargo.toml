@@ -1,6 +1,6 @@
 [package]
 name = "shuttle-actix-web"
-version = "0.50.0"
+version = "0.51.0"
 edition = "2021"
 license = "Apache-2.0"
 description = "Service implementation to run an actix webserver on shuttle"
@@ -12,4 +12,4 @@ keywords = ["shuttle-service", "actix"]
 [dependencies]
 actix-web = "4.3.1"
 num_cpus = "1.15.0"
-shuttle-runtime = { path = "../../runtime", version = "0.50.0", default-features = false }
+shuttle-runtime = { path = "../../runtime", version = "0.51.0", default-features = false }

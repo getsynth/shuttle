@@ -14,6 +14,10 @@ pub struct Args {
 
     #[command(subcommand)]
     pub command: Command,
+
+    /// Request timeout for the API client in seconds.
+    #[arg(long, default_value_t = 120)]
+    pub client_timeout: u64,
 }
 
 #[derive(Subcommand, Debug)]

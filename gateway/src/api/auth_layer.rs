@@ -16,9 +16,8 @@ use once_cell::sync::Lazy;
 use opentelemetry::global;
 use opentelemetry_http::HeaderInjector;
 use shuttle_backends::{
-    auth::ConvertResponse, cache::CacheManagement, headers::XShuttleAdminSecret,
+    auth::ConvertResponse, cache::CacheManagement, headers::XShuttleAdminSecret, key::ApiKey,
 };
-use shuttle_common::ApiKey;
 use tower::{Layer, Service};
 use tracing::{error, trace, Span};
 use tracing_opentelemetry::OpenTelemetrySpanExt;

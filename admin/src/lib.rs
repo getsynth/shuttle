@@ -15,7 +15,7 @@ pub async fn run(args: Args) {
     trace!(?args, "starting with args");
 
     let api_key = get_api_key();
-    let client = Client::new(args.api_url.clone(), api_key);
+    let client = Client::new(args.api_url.clone(), api_key, args.client_timeout);
 
     match args.command {
         Command::Revive => {

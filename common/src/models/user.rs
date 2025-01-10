@@ -47,8 +47,6 @@ impl UserResponse {
 #[serde(rename_all = "lowercase")]
 #[cfg_attr(feature = "display", derive(strum::Display))]
 #[cfg_attr(feature = "display", strum(serialize_all = "lowercase"))]
-#[cfg_attr(feature = "persist", derive(sqlx::Type))]
-#[cfg_attr(feature = "persist", sqlx(rename_all = "lowercase"))]
 #[typeshare::typeshare]
 pub enum AccountTier {
     #[default]

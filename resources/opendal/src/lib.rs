@@ -66,7 +66,7 @@ impl IntoResource<Operator> for OpendalOutput {
     async fn into_resource(self) -> Result<Operator, shuttle_service::Error> {
         let scheme = Scheme::from_str(&self.scheme).map_err(Error)?;
 
-        Ok(Operator::via_map(scheme, self.cfg).map_err(Error)?)
+        Ok(Operator::via_iter(scheme, self.cfg).map_err(Error)?)
     }
 }
 

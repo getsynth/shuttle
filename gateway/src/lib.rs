@@ -283,7 +283,7 @@ pub mod tests {
 
         impl Sealed for axum::http::request::Builder {}
 
-        impl<'r> Sealed for &'r mut axum::headers::HeaderMap {}
+        impl Sealed for &mut axum::headers::HeaderMap {}
 
         impl<B> Sealed for axum::http::Request<B> {}
     }
@@ -299,7 +299,7 @@ pub mod tests {
         }
     }
 
-    impl<'r> RequestBuilderExt for &'r mut axum::headers::HeaderMap {
+    impl RequestBuilderExt for &mut axum::headers::HeaderMap {
         fn with_header<H: axum::headers::Header>(self, header: &H) -> Self {
             let mut buf = vec![];
             header.encode(&mut buf);

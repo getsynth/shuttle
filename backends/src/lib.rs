@@ -13,6 +13,7 @@ pub mod cache;
 pub mod client;
 mod future;
 pub mod headers;
+pub mod key;
 pub mod metrics;
 mod otlp_tracing_bridge;
 pub mod project_name;

@@ -1,6 +1,6 @@
 [package]
 name = "shuttle-backends"
-version = "0.50.0"
+version = "0.51.0"
 edition.workspace = true
 license.workspace = true
 repository.workspace = true
@@ -27,6 +27,7 @@ pin-project = { workspace = true }
 permit-client-rs = { git = "https://github.com/shuttle-hq/permit-client-rs", rev = "19085ba" }
 permit-pdp-client-rs = { git = "https://github.com/shuttle-hq/permit-pdp-client-rs", rev = "37c7296" }
 portpicker = { workspace = true, optional = true }
+rand = { workspace = true }
 reqwest = { workspace = true, features = ["json"] }
 # keep locked to not accidentally invalidate someone's project name
 # higher versions have a lot more false positives
@@ -44,6 +45,7 @@ tracing = { workspace = true, features = ["std"] }
 tracing-opentelemetry = { workspace = true }
 tracing-subscriber = { workspace = true, features = ["env-filter", "fmt"]}
 ttl_cache = { workspace = true }
+zeroize = { workspace = true }
 wiremock = { workspace = true, optional = true }
 
 [features]
@@ -54,6 +56,7 @@ test-utils = ["portpicker", "wiremock"]
 base64 = { workspace = true }
 ctor = { workspace = true }
 jsonwebtoken = { workspace = true }
+proptest = "1.1.0"
 ring = { workspace = true }
 serial_test = "3.0.0"
 shuttle-common-tests = { workspace = true }

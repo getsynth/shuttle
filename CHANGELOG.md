@@ -7,7 +7,27 @@ See [conventional commits](https://www.conventionalcommits.org/) for commit guid
 
 **For proper release notes with more details such as upgrading guidelines, check out the [releases page](https://github.com/shuttle-hq/shuttle/releases).**
 
-## [0.50.0](https://github.com/shuttle-hq/shuttle/compare/v0.49.0..0.50.0) - 2025-01-07
+## [0.51.0](https://github.com/shuttle-hq/shuttle/compare/v0.50.0..0.51.0) - 2025-01-10
+
+### Features
+
+- *(shared-db)* SerdeJsonOperator for json storage ([#1952](https://github.com/shuttle-hq/shuttle/issues/1952)) - ([f0a0735](https://github.com/shuttle-hq/shuttle/commit/f0a073598d056a459966993e143c26964a6ca455))
+- *(shuttle-axum)* Support axum 0.8, drop axum 0.6 ([#1951](https://github.com/shuttle-hq/shuttle/issues/1951)) - ([72a7e3c](https://github.com/shuttle-hq/shuttle/commit/72a7e3c33e22c026ff02542c9aeb54a08e082827))
+- Opendal on postgres output type, bump opendal ([#1928](https://github.com/shuttle-hq/shuttle/issues/1928)) - ([173d4b9](https://github.com/shuttle-hq/shuttle/commit/173d4b9fa0cf071e25dcf0a52281ea8ff856a9a0))
+- Make api-client timeout configurable, increase in admin cli ([#1950](https://github.com/shuttle-hq/shuttle/issues/1950)) - ([7feb747](https://github.com/shuttle-hq/shuttle/commit/7feb747b2620f3e1fb130930f70d372b2f581d2c))
+
+### Miscellaneous Tasks
+
+- *(shuttle-salvo)* Bump salvo version ([#1953](https://github.com/shuttle-hq/shuttle/issues/1953)) - ([bd6d7cb](https://github.com/shuttle-hq/shuttle/commit/bd6d7cb5211fbee993054ed242a847f905af2d52))
+- V0.51.0 - ([3d26735](https://github.com/shuttle-hq/shuttle/commit/3d26735049b8fe9e6dd0283e2fc3f3c3a14287a2))
+- Move ApiKey type to backends, remove AccountTier sqlx::Type ([#1923](https://github.com/shuttle-hq/shuttle/issues/1923)) - ([ef1ee64](https://github.com/shuttle-hq/shuttle/commit/ef1ee646ca511a7fdcb8162e64d67988dc9af070))
+
+### Miscellaneous
+
+- Bump examples - ([82d9e72](https://github.com/shuttle-hq/shuttle/commit/82d9e72bb0c401300fa1b86aa21e38a0baa3620e))
+- Cargo update - ([b00e689](https://github.com/shuttle-hq/shuttle/commit/b00e689b1b0e71f8b0b4e7ad5fe6004a82dc796e))
+
+## [0.50.0](https://github.com/shuttle-hq/shuttle/compare/v0.49.0..v0.50.0) - 2025-01-07
 
 ### Features
 
@@ -29,8 +49,7 @@ See [conventional commits](https://www.conventionalcommits.org/) for commit guid
 
 ### Miscellaneous Tasks
 
-- Update examples - ([4abff0f](https://github.com/shuttle-hq/shuttle/commit/4abff0f3e201dd236db413160c149e6c05f7ca21))
-- V0.50.0 - ([f166a87](https://github.com/shuttle-hq/shuttle/commit/f166a87c39e7b38e4abe4682232b613cd956b0d0))
+- Prepare v0.50.0 release ([#1948](https://github.com/shuttle-hq/shuttle/issues/1948)) - ([05d9fe8](https://github.com/shuttle-hq/shuttle/commit/05d9fe85af15230cdf883e7fab43978b2c027de8))
 
 ### Miscellaneous
 

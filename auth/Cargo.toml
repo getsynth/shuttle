@@ -1,6 +1,6 @@
 [package]
 name = "shuttle-auth"
-version = "0.50.0"
+version = "0.51.0"
 edition.workspace = true
 license.workspace = true
 repository.workspace = true
@@ -8,7 +8,7 @@ publish = false
 
 [dependencies]
 shuttle-backends = { workspace = true }
-shuttle-common = { workspace = true, features = ["models", "persist"] }
+shuttle-common = { workspace = true, features = ["models"] }
 
 anyhow = { workspace = true }
 async-stripe = { version = "0.25.1", default-features = false, features = ["checkout", "runtime-tokio-hyper-rustls"] }

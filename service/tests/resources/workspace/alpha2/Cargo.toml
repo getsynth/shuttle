@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-axum = "0.7.3"
+axum = "0.8.1"
 shared = { path = "../shared", version = "0.1.0" }
 shuttle-axum = { path = "../../../../../services/shuttle-axum" }
 shuttle-runtime = { path = "../../../../../runtime" }

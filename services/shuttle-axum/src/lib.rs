@@ -4,8 +4,8 @@ use std::net::SocketAddr;
 
 #[cfg(feature = "axum")]
 use axum::Router;
-#[cfg(feature = "axum-0-6")]
-use axum_0_6::Router;
+#[cfg(feature = "axum-0-7")]
+use axum_0_7::Router;
 
 /// A wrapper type for [axum::Router] so we can implement [shuttle_runtime::Service] for it.
 pub struct AxumService(pub Router);
@@ -24,11 +24,15 @@ impl shuttle_runtime::Service for AxumService {
         )
         .await
         .map_err(CustomError::new)?;
-        #[cfg(feature = "axum-0-6")]
-        axum_0_6::Server::bind(&addr)
-            .serve(self.0.into_make_service())
-            .await
-            .map_err(CustomError::new)?;
+        #[cfg(feature = "axum-0-7")]
+        axum_0_7::serve(
+            shuttle_runtime::tokio::net::TcpListener::bind(addr)
+                .await
+                .map_err(CustomError::new)?,
+            self.0,
+        )
+        .await
+        .map_err(CustomError::new)?;
 
         Ok(())
     }

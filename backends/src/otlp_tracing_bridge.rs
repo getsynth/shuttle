@@ -23,7 +23,7 @@ struct EventVisitor<'a> {
     log_record: &'a mut LogRecord,
 }
 
-impl<'a> tracing::field::Visit for EventVisitor<'a> {
+impl tracing::field::Visit for EventVisitor<'_> {
     fn record_debug(&mut self, field: &tracing::field::Field, value: &dyn std::fmt::Debug) {
         if field.name() == "message" {
             self.log_record.body = Some(format!("{value:?}").into());

@@ -25,20 +25,20 @@ exclude = [
 ]
 
 [workspace.package]
-version = "0.50.0"
+version = "0.51.0"
 edition = "2021"
 license = "Apache-2.0"
 repository = "https://github.com/shuttle-hq/shuttle"
 
 # https://doc.rust-lang.org/cargo/reference/workspaces.html#the-workspacedependencies-table
 [workspace.dependencies]
-shuttle-api-client = { path = "api-client", version = "0.50.0", default-features = false }
-shuttle-backends = { path = "backends", version = "0.50.0" }
-shuttle-codegen = { path = "codegen", version = "0.50.0" }
-shuttle-common = { path = "common", version = "0.50.0" }
-shuttle-common-tests = { path = "common-tests", version = "0.50.0" }
-shuttle-proto = { path = "proto", version = "0.50.0" }
-shuttle-service = { path = "service", version = "0.50.0" }
+shuttle-api-client = { path = "api-client", version = "0.51.0", default-features = false }
+shuttle-backends = { path = "backends", version = "0.51.0" }
+shuttle-codegen = { path = "codegen", version = "0.51.0" }
+shuttle-common = { path = "common", version = "0.51.0" }
+shuttle-common-tests = { path = "common-tests", version = "0.51.0" }
+shuttle-proto = { path = "proto", version = "0.51.0" }
+shuttle-service = { path = "service", version = "0.51.0" }
 
 anyhow = "1.0.66"
 async-trait = "0.1.58"
@@ -114,7 +114,7 @@ tracing-subscriber = { version = "0.3.16", default-features = false, features = 
 typeshare = "1.0.3"
 ttl_cache = "0.5.1"
 ulid = "1.0.0"
-url = "=2.5.2" # https://github.com/servo/rust-url/issues/992
+url = "2.5.4"
 uuid = "1.2.2"
 wiremock = "0.6.0"
 zeroize = "1.6.0"

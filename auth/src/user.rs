@@ -8,14 +8,14 @@ use axum::{
     TypedHeader,
 };
 use chrono::{DateTime, Utc};
-use shuttle_backends::{client::PermissionsDal, headers::XShuttleAdminSecret};
+use shuttle_backends::{client::PermissionsDal, headers::XShuttleAdminSecret, key::ApiKey};
 use shuttle_common::{
     limits::Limits,
     models::{
         self,
         user::{AccountTier, UserId},
     },
-    ApiKey, Secret,
+    Secret,
 };
 use sqlx::{postgres::PgRow, query, FromRow, PgPool, Row};
 use stripe::{SubscriptionId, SubscriptionStatus};
@@ -97,7 +97,7 @@ where
             "INSERT INTO users (account_name, key, account_tier, user_id, has_access_to_beta) VALUES ($1, $2, $3, $4, $5)",
         )
         .bind(&user.name)
-        .bind(user.key.expose())
+        .bind(user.key.expose().as_ref())
         .bind(user.account_tier.to_string())
         .bind(&user.id)
         .bind(false)
@@ -157,7 +157,7 @@ where
 
     async fn get_user_by_key(&self, key: ApiKey) -> Result<User, Error> {
         let mut user: User = sqlx::query_as("SELECT * FROM users WHERE key = $1")
-            .bind(&key)
+            .bind(key.as_ref())
             .fetch_optional(&self.pool)
             .await?
             .ok_or(Error::UserNotFound)?;
@@ -185,7 +185,7 @@ where
         let key = ApiKey::generate();
 
         let rows_affected = query("UPDATE users SET key = $1 WHERE user_id = $2")
-            .bind(&key)
+            .bind(key.as_ref())
             .bind(&user_id)
             .execute(&self.pool)
             .await?
@@ -391,7 +391,12 @@ impl FromRow<'_, PgRow> for User {
         Ok(User {
             name: row.try_get("account_name").unwrap(),
             id: row.try_get("user_id").unwrap(),
-            key: Secret::new(row.try_get("key").unwrap()),
+            key: Secret::new(ApiKey::parse(row.try_get("key").unwrap()).map_err(|err| {
+                sqlx::Error::ColumnDecode {
+                    index: "key".to_string(),
+                    source: Box::new(std::io::Error::new(ErrorKind::Other, err.to_string())),
+                }
+            })?),
             account_tier: AccountTier::from_str(row.try_get("account_tier").unwrap()).map_err(
                 |err| sqlx::Error::ColumnDecode {
                     index: "account_tier".to_string(),

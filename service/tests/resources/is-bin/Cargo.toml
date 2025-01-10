@@ -6,7 +6,7 @@ edition = "2021"
 [workspace]
 
 [dependencies]
-axum = "0.7.3"
+axum = "0.8.1"
 shuttle-axum = { path = "../../../../services/shuttle-axum" }
 shuttle-runtime = { path = "../../../../runtime" }
 tokio = { version = "1.22.0" }

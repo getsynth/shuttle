@@ -1,6 +1,6 @@
 [package]
 name = "shuttle-salvo"
-version = "0.50.0"
+version = "0.51.0"
 edition = "2021"
 license = "Apache-2.0"
 description = "Service implementation to run a salvo webserver on shuttle"
@@ -10,5 +10,5 @@ keywords = ["shuttle-service", "salvo"]
 [workspace]
 
 [dependencies]
-salvo = "0.63.0"
-shuttle-runtime = { path = "../../runtime", version = "0.50.0", default-features = false }
+salvo = "0.75.0"
+shuttle-runtime = { path = "../../runtime", version = "0.51.0", default-features = false }

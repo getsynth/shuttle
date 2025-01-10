@@ -29,8 +29,8 @@ be a binary crate with a few dependencies including `shuttle-runtime` and `shutt
 
 ```toml
 axum = "0.7.3"
-shuttle-axum = "0.50.0"
-shuttle-runtime = "0.50.0"
+shuttle-axum = "0.51.0"
+shuttle-runtime = "0.51.0"
 tokio = "1.28.2"
 ```
 

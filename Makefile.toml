@@ -168,9 +168,9 @@ feature_flags = array "--all-features"
 ###### Crates that have mutually exclusive features define
 ###### their own set of feature flags to test:
 if eq ${path} "resources/shared-db"
-    feature_flags = array "-F mongodb" "-F postgres" "-F postgres,sqlx" "-F postgres,sqlx-native-tls" "-F postgres,diesel-async" "-F postgres,diesel-async-bb8" "-F postgres,diesel-async-deadpool"
+    feature_flags = array "-F mongodb" "-F postgres" "-F postgres,sqlx" "-F postgres,sqlx-native-tls" "-F postgres,diesel-async" "-F postgres,diesel-async-bb8" "-F postgres,diesel-async-deadpool" "-F opendal-postgres"
 elseif eq ${path} "services/shuttle-axum"
-    feature_flags = array "-F axum" "-F axum-0-6"
+    feature_flags = array "-F axum" "-F axum-0-7"
 elseif eq ${path} "services/shuttle-serenity"
     feature_flags = array "-F serenity,rustls_backend" "-F serenity,native_tls_backend" "-F serenity-0-11-rustls_backend" "-F serenity-0-11-native_tls_backend"
 end
