@@ -130,8 +130,10 @@ impl ShuttleApiClient {
         &self,
         project: &str,
         deployment_req: DeploymentRequest,
+        force: bool,
     ) -> Result<deployment::Response> {
-        let path = format!("/projects/{project}/services/{project}");
+        let query = if force { "?force=true" } else { "" };
+        let path = format!("/projects/{project}/services/{project}{query}");
         let deployment_req = rmp_serde::to_vec(&deployment_req)
             .context("serialize DeploymentRequest as a MessagePack byte vector")?;
 

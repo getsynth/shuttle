@@ -2612,7 +2612,7 @@ impl Shuttle {
 
         deployment_req.data = archive;
         let deployment = client
-            .deploy(project_name, deployment_req)
+            .deploy(project_name, deployment_req, args.force)
             .await
             .map_err(suggestions::deploy::deploy_request_failure)?;
 

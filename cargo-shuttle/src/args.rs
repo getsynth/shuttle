@@ -356,6 +356,9 @@ pub struct DeployArgs {
     #[arg(long)]
     pub output_archive: Option<PathBuf>,
 
+    #[arg(long, hide = true)]
+    pub force: bool,
+
     #[command(flatten)]
     pub secret_args: SecretsArgs,
 }

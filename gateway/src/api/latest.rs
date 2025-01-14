@@ -417,14 +417,25 @@ async fn delete_project(
     Ok(AxumJson("project successfully deleted".to_owned()))
 }
 
+#[derive(Deserialize)]
+struct DeployQuery {
+    force: Option<bool>,
+}
+
 #[instrument(skip_all, fields(shuttle.project.name = %scoped_user.scope))]
-async fn override_create_service(scoped_user: ScopedUser) -> Result<Response<Body>, ApiError> {
-    // Creating new deployments on the shuttle.rs platform is deprecated as of the first of January
-    // 2025.
-    return Err(Deprecated(
-        "Creating new deployments on the shuttle.rs platform has been deprecated.".to_string(),
-    )
-    .into());
+async fn override_create_service(
+    state: State<RouterState>,
+    scoped_user: ScopedUser,
+    Query(query): Query<DeployQuery>,
+    req: Request<Body>,
+) -> Result<Response<Body>, ApiError> {
+    if query.force.is_some_and(|t| t) {
+        route_project(state, scoped_user, req).await
+    } else {
+        Err(Deprecated(
+            "Creating new deployments on the shuttle.rs platform has been deprecated.".to_string(),
+        ))?
+    }
 }
 
 #[instrument(skip_all, fields(shuttle.project.name = %scoped_user.scope))]
