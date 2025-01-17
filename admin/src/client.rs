@@ -147,4 +147,14 @@ impl Client {
         let path = format!("/admin/gc/shuttlings/{minutes}");
         self.inner.get_json(&path).await
     }
+
+    pub async fn get_all_deployed_projects(&self) -> Result<Vec<String>> {
+        let path = format!("/admin/projects");
+        self.inner.get_json(&path).await
+    }
+
+    pub async fn reconcile_state(&self, project_id: &str) -> Result<serde_json::Value> {
+        let path = format!("/admin/projects/reconcile/{project_id}");
+        self.inner.post_json(&path, Option::<()>::None).await
+    }
 }

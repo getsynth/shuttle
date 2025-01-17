@@ -35,6 +35,9 @@ pub enum Command {
     /// Manage project names
     ProjectNames,
 
+    /// Get all deployed projects.
+    DeployedProjects,
+
     ChangeProjectOwner {
         project_name: String,
         new_user_id: UserId,
@@ -62,6 +65,13 @@ pub enum Command {
 
     /// Renew all custom domain certificates
     RenewCerts,
+
+    /// Reconcile the internal state of a project with the ECS state.
+    ReconcileState {
+        /// Project to reconcile.
+        #[arg(long, visible_alias = "id")]
+        project_id: String,
+    },
 
     /// Garbage collect free tier projects
     Gc {

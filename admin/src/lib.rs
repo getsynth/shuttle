@@ -75,6 +75,15 @@ pub async fn run(args: Args) {
                 }
             }
         }
+        Command::DeployedProjects => {
+            let projects = client
+                .get_all_deployed_projects()
+                .await
+                .expect("to get list of projects");
+            for p in projects {
+                println!("{}", p);
+            }
+        }
         Command::Stats(StatsCommand::Load { clear }) => {
             let resp = if clear {
                 client.clear_load().await.expect("to delete load stats")
@@ -119,6 +128,10 @@ pub async fn run(args: Args) {
                 .update_project_compute_tier(&project_id, compute_tier)
                 .await
                 .unwrap();
+            println!("{res:?}");
+        }
+        Command::ReconcileState { project_id } => {
+            let res = client.reconcile_state(&project_id).await.unwrap();
             println!("{res:?}");
         }
         Command::Gc {
