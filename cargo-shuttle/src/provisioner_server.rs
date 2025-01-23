@@ -41,7 +41,7 @@ impl LocalProvisioner {
         // This only constructs the client and does not try to connect.
         // If the socket is not found, a "no such file" error will happen on the first request to Docker.
         Ok(Self {
-            docker: Docker::connect_with_local_defaults()?,
+            docker: Docker::connect_with_defaults()?,
         })
     }
 

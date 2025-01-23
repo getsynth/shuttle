@@ -383,7 +383,7 @@ pub mod tests {
 
     impl World {
         pub async fn new() -> Self {
-            let docker = Docker::connect_with_local_defaults().unwrap();
+            let docker = Docker::connect_with_defaults().unwrap();
 
             docker
                 .list_images::<&str>(None)

@@ -325,7 +325,8 @@ impl GatewayService {
             ));
         }
 
-        let docker = Docker::connect_with_unix(&args.docker_host, 60, API_DEFAULT_VERSION).unwrap();
+        let docker =
+            Docker::connect_with_socket(&args.docker_host, 60, API_DEFAULT_VERSION).unwrap();
 
         let container_settings = ContainerSettings::builder().from_args(&args).await;
 
