@@ -19,6 +19,9 @@
   <a href="https://circleci.com/gh/shuttle-hq/shuttle/">
     <img alt="build status" src="https://circleci.com/gh/shuttle-hq/shuttle.svg?style=shield"/>
   </a>
+  <a href="https://gurubase.io/g/shuttle">
+    <img alt="Gurubase" src="https://img.shields.io/badge/Gurubase-Ask%20Shuttle%20Guru-006BFF"/>
+  </a>
 </p>
 <p align="center">
   <a href="https://crates.io/crates/cargo-shuttle">
