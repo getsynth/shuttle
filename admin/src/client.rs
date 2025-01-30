@@ -13,9 +13,16 @@ impl Client {
         }
     }
 
-    pub async fn renew_old_certificates(&self) -> Result<serde_json::Value> {
+    pub async fn get_old_certificates(&self) -> Result<Vec<(String, String)>> {
+        self.inner.get_json("/admin/certificates").await
+    }
+
+    pub async fn renew_certificate(&self, cert_id: &str) -> Result<String> {
         self.inner
-            .put_json("/admin/certificates/renew", Option::<()>::None)
+            .put_json(
+                format!("/admin/certificates/renew/{cert_id}"),
+                Option::<()>::None,
+            )
             .await
     }
 

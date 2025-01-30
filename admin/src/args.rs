@@ -34,7 +34,7 @@ pub enum Command {
         compute_tier: ComputeTier,
     },
 
-    /// Renew all custom domain certificates
+    /// Renew all old custom domain certificates
     RenewCerts,
 
     /// Garbage collect free tier projects

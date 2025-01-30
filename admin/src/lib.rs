@@ -21,8 +21,14 @@ pub async fn run(args: Args) {
             unimplemented!();
         }
         Command::RenewCerts => {
-            let res = client.renew_old_certificates().await.unwrap();
-            println!("{res}");
+            let certs = client.get_old_certificates().await.unwrap();
+            eprintln!("Starting renewals of {} certs in 5 seconds...", certs.len());
+            tokio::time::sleep(tokio::time::Duration::from_millis(5000)).await;
+            for (cert_id, _) in certs {
+                println!("{:?}", client.renew_certificate(&cert_id).await);
+                // prevent api rate limiting
+                tokio::time::sleep(tokio::time::Duration::from_millis(1000)).await;
+            }
         }
         Command::UpdateCompute {
             project_id,
