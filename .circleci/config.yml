@@ -173,7 +173,7 @@ jobs:
       - restore-cargo-and-sccache
       - install-cargo-make
       - run: cargo make ci-workspace
-      - run: curl --proto '=https' --tlsv1.2 -LsSf https://github.com/1Password/typeshare/releases/download/v1.11.0/typeshare-cli-v1.11.0-installer.sh | sh
+      - run: curl --proto '=https' --tlsv1.2 -LsSf https://github.com/1Password/typeshare/releases/download/v1.13.0/typeshare-cli-v1.13.0-installer.sh | sh
       - run: cargo make types
       - run: cargo make check-types
       - save-sccache
