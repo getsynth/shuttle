@@ -185,9 +185,15 @@ pub enum DeploymentCommand {
     Redeploy {
         /// ID of deployment to redeploy
         id: Option<String>,
+
+        #[command(flatten)]
+        tracking_args: DeploymentTrackingArgs,
     },
     /// Stop running deployment(s)
-    Stop,
+    Stop {
+        #[command(flatten)]
+        tracking_args: DeploymentTrackingArgs,
+    },
 }
 
 #[derive(Subcommand)]
@@ -308,22 +314,28 @@ pub struct DeployArgs {
     /// WIP: Deploy this Docker image instead of building one
     #[arg(long, short = 'i', hide = true)]
     pub image: Option<String>,
-    /// Don't follow the deployment status, exit after the deployment begins
-    #[arg(long, visible_alias = "nf")]
-    pub no_follow: bool,
 
     /// Allow deployment with uncommitted files
     #[arg(long, visible_alias = "ad")]
     pub allow_dirty: bool,
-    /// Don't display timestamps and log origin tags
-    #[arg(long)]
-    pub raw: bool,
     /// Output the deployment archive to a file instead of sending a deployment request
     #[arg(long)]
     pub output_archive: Option<PathBuf>,
 
     #[command(flatten)]
+    pub tracking_args: DeploymentTrackingArgs,
+
+    #[command(flatten)]
     pub secret_args: SecretsArgs,
+}
+#[derive(Args, Default)]
+pub struct DeploymentTrackingArgs {
+    /// Don't follow the deployment status, exit after the operation begins
+    #[arg(long, visible_alias = "nf")]
+    pub no_follow: bool,
+    /// Don't display timestamps and log origin tags
+    #[arg(long)]
+    pub raw: bool,
 }
 
 #[derive(Args, Debug)]

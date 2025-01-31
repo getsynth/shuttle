@@ -14,6 +14,7 @@ use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
 use anyhow::{anyhow, bail, Context, Result};
+use args::DeploymentTrackingArgs;
 use chrono::Utc;
 use clap::{parser::ValueSource, CommandFactory, FromArgMatches};
 use crossterm::style::Stylize;
@@ -242,8 +243,10 @@ impl Shuttle {
                     self.deployments_list(page, limit, table).await
                 }
                 DeploymentCommand::Status { id } => self.deployment_get(id).await,
-                DeploymentCommand::Redeploy { id } => self.deployment_redeploy(id).await,
-                DeploymentCommand::Stop => self.stop().await,
+                DeploymentCommand::Redeploy { id, tracking_args } => {
+                    self.deployment_redeploy(id, tracking_args).await
+                }
+                DeploymentCommand::Stop { tracking_args } => self.stop(tracking_args).await,
             },
             Command::Resource(cmd) => match cmd {
                 ResourceCommand::List {
@@ -844,11 +847,16 @@ impl Shuttle {
         })
     }
 
-    async fn stop(&self) -> Result<()> {
+    async fn stop(&self, tracking_args: DeploymentTrackingArgs) -> Result<()> {
         let client = self.client.as_ref().unwrap();
         let pid = self.ctx.project_id();
         let res = client.stop_service(pid).await?;
         println!("{res}");
+
+        if tracking_args.no_follow {
+            return Ok(());
+        }
+
         wait_with_spinner(2000, |_, pb| async move {
             let deployment = client.get_current_deployment(pid).await?;
 
@@ -983,7 +991,11 @@ impl Shuttle {
         Ok(())
     }
 
-    async fn deployment_redeploy(&self, deployment_id: Option<String>) -> Result<()> {
+    async fn deployment_redeploy(
+        &self,
+        deployment_id: Option<String>,
+        tracking_args: DeploymentTrackingArgs,
+    ) -> Result<()> {
         let client = self.client.as_ref().unwrap();
 
         let pid = self.ctx.project_id();
@@ -1000,7 +1012,11 @@ impl Shuttle {
         };
         let deployment = client.redeploy(pid, &deployment_id).await?;
 
-        self.track_deployment_status_and_print_logs_on_fail(pid, &deployment.id, false)
+        if tracking_args.no_follow {
+            println!("{}", deployment.to_string_colored());
+            return Ok(());
+        }
+        self.track_deployment_status_and_print_logs_on_fail(pid, &deployment.id, tracking_args.raw)
             .await?;
 
         Ok(())
@@ -1398,13 +1414,17 @@ impl Shuttle {
                 .deploy(pid, DeploymentRequest::Image(deployment_req_image))
                 .await?;
 
-            if args.no_follow {
+            if args.tracking_args.no_follow {
                 println!("{}", deployment.to_string_colored());
                 return Ok(());
             }
 
-            self.track_deployment_status_and_print_logs_on_fail(pid, &deployment.id, args.raw)
-                .await?;
+            self.track_deployment_status_and_print_logs_on_fail(
+                pid,
+                &deployment.id,
+                args.tracking_args.raw,
+            )
+            .await?;
 
             return Ok(());
         }
@@ -1507,13 +1527,17 @@ impl Shuttle {
             .deploy(pid, DeploymentRequest::BuildArchive(deployment_req))
             .await?;
 
-        if args.no_follow {
+        if args.tracking_args.no_follow {
             println!("{}", deployment.to_string_colored());
             return Ok(());
         }
 
-        self.track_deployment_status_and_print_logs_on_fail(pid, &deployment.id, args.raw)
-            .await?;
+        self.track_deployment_status_and_print_logs_on_fail(
+            pid,
+            &deployment.id,
+            args.tracking_args.raw,
+        )
+        .await?;
 
         Ok(())
     }
